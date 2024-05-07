@@ -53,22 +53,17 @@ class CodeWriter:
         self._a_command(true_label)
         self._c_command(comp="D", jmp=cond)
 
-        # Else
-        self._load_sp()
-        self._c_command("M", "0")  # False
-
-        # Continue, skip True case
+        # Else jmp to continue
+        self._set_sp("0") # False
         self._a_command(cont_label)
         self._c_command(comp=0, jmp="JMP")
 
         # True
         self._l_command(true_label)
-        self._load_sp()
-        self._c_command("M", "-1")  # True
+        self._set_sp("-1") # True
 
         # Continue
         self._l_command(cont_label)
-        self._inc_sp()
 
     def _binary(self, command):
         self._dec_sp()  # y
@@ -77,16 +72,11 @@ class CodeWriter:
         self._c_command("D", "M")
 
         self._dec_sp()  # x
-        self._load_sp()
-        self._c_command("M", f"M{command}D")
-
-        self._inc_sp()
+        self._set_sp(f"M{command}D")
 
     def _unary(self, command):
         self._dec_sp()  # y
-        self._load_sp()
-        self._c_command("M", f"{command}M")
-        self._inc_sp()
+        self._set_sp(f"{command}M")
 
     def write_push_pop(self, command_type: CommandType, segment: str, index: int):
         if command_type == CommandType.C_PUSH:
@@ -109,9 +99,7 @@ class CodeWriter:
             self._c_command("A", "D+A")  # Add index and get new addres
             self._c_command("D", "M")  # Get data into D
 
-        self._load_sp()
-        self._c_command("M", "D")
-        self._inc_sp()
+        self._set_sp("D")
 
     def _pop(self, segment, index):
 
@@ -141,6 +129,7 @@ class CodeWriter:
     def _set_sp(self, val):
         self._load_sp()
         self._c_command("M", val)
+        self._inc_sp()
 
     def _a_command(self, segment):
         cmd = f"@{str(segment)}\n"
