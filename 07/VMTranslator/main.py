@@ -28,6 +28,7 @@ def parse_file(fp):
     while parser.has_more_commands():
         parser.advance()
 
+        code_writer.write_command(parser.command)
         if parser.c_type == CommandType.C_ARITHMETICS:
             code_writer.write_arithmetic(parser.command)
 

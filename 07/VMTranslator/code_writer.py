@@ -199,6 +199,10 @@ class CodeWriter:
         cmd = f"({label})\n"
         self.file.write(cmd)
 
+
+    def write_command(self, command):
+        self.file.write(f"\\\\ {command}\n")
+        
     def close(self):
         self.__del__()
 
