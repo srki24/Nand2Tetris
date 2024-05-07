@@ -41,13 +41,11 @@ class CodeWriter:
         cont_label = self._new_label(("CONT_LABEL"))
 
         # Loading data
-        self._dec_sp()
-        self._load_sp()
-        self._c_command("D", "M")
+        self._pop_sp()              # X
+        self._c_command("D", "M")   # D = *X
 
-        self._dec_sp()
-        self._load_sp()
-        self._c_command("D", "M-D")  # D = Y - X
+        self._pop_sp()              # Y
+        self._c_command("D", "M-D") # D = *Y - *X
 
         # JMP to true
         self._a_command(true_label)
@@ -66,53 +64,102 @@ class CodeWriter:
         self._l_command(cont_label)
 
     def _binary(self, command):
-        self._dec_sp()  # y
+        
+        self._pop_sp()               # Y
+        self._c_command("D", "M")    # D = *Y
 
-        self._load_sp()
-        self._c_command("D", "M")
-
-        self._dec_sp()  # x
-        self._set_sp(f"M{command}D")
+        self._dec_sp()               # X
+        self._set_sp(f"M{command}D") # *X [+,-,&,|] *Y
 
     def _unary(self, command):
-        self._dec_sp()  # y
-        self._set_sp(f"{command}M")
+        self._dec_sp()               # Y
+        self._set_sp(f"{command}M")  # [-,&,|,!] *Y
 
     def write_push_pop(self, command_type: CommandType, segment: str, index: int):
+        
+        mapping = {
+            "local": "LCL",
+            "argument": "ARG",
+            "this": "THIS",
+            "that": "THAT",
+            "constant": "CONST",
+            "temp": "TEMP"
+            }
+        segment = mapping.get(segment, segment)
+        
         if command_type == CommandType.C_PUSH:
-            self._push(segment, index)
+            self.push(segment, index)
 
         if command_type == CommandType.C_POP:
-            self._pop(segment, index)
+            self.pop(segment, index)
 
-    def _push(self, segment, index):
+    def push(self, segment, index):
 
-        self._a_command(index)
-        self._c_command("D", "A")  # index into D
+        if segment == "CONST":
+            self._a_command(index)
+            self._c_command("D", "A")   # D = Index
+            self._set_sp("D")           # *SP = D (Index)
 
-        #TODO: TEMP base address is always 5
+        if segment == "TEMP":
+            
+            self._a_command(index)
+            self._c_command("D", "A")   # D = Index
+            self._a_command("5")        # @5
+            self._c_command("A", "D+A") # A = Index + 5
+            self._c_command("D", "M")   # D = *Index + 5
+            self._set_sp("D")           # *SP = *D (Index+5)
+
+
         #TODO: STATIC fille foo.vm push static 5 => creates foo.5 variable 
         #TODO: pointer fixed memory segment, has 0 and 1 => pointer 0 should result in accesing THIS and 1 should result in acessing THAT (changes base address of this or that)
         
-        if segment != "constant": #TODO this works for lcl arg this that
-            self._a_command(segment)  # Get segtment addr
-            self._c_command("A", "D+A")  # Add index and get new addres
-            self._c_command("D", "M")  # Get data into D
+        if segment in ["LCL", "ARG", "THIS", "THAT"]:
+            self._a_command(index)
+            self._c_command("D", "A")   # D = Index
+            self._a_command(segment)    # @Segment
+            self._c_command("A", "D+M") # A = Index + *Segment
+            self._c_command("D", "M")   # D = *(Index + *Segment)
+            self._set_sp("D")           # *SP = D (Index + Segment)
 
-        self._set_sp("D")
+    def pop(self, segment, index):
+        if segment in ["LCL", "ARG", "THIS", "THAT"]:
+            self._a_command(index)       # @Index
+            self._c_command("D", "A")    # D = Index
 
-    def _pop(self, segment, index):
+            self._a_command(segment)     # @Segment
+            self._c_command("D", "D+M")  # D = Index + *Segment
+            
+            self._a_command("R14")
+            self._c_command("M", "D")    # *R14 = Index + Segment
+            
+            self._pop_sp()
+            self._c_command("D", "M")    # D = *SP
+            
+            self._a_command("R14")       
+            self._c_command("A", "M")    # A = *R14
 
-        self._a_command(index)
-        self._c_command("D", "A")  # index into D
+            self._c_command("M", "D")    # *A = *SP
+            
+        if segment in ["TEMP"]:
+            
+            self._a_command(index)       # Index
+            self._c_command("D", "A")    # D = Index
+            
+            self._a_command("5")         # @5 - Temp always start at 5
+            self._c_command("D", "A+D")  # D = 5 + Index
 
-        self._a_command(segment)
-        self._c_command("D", "D+A")  # Address set to segment + idx
+            self._a_command("R14")     
+            self._c_command("M", "D")    # *R14 = 5 + Index
+            
+            self._pop_sp()
+            self._c_command("D", "M")    # D = *SP
+            
+            self._a_command("R14")       
+            self._c_command("A", "M")    # A = *R14
 
-        self._dec_sp()
-        self._load_sp()
-
-        self._c_command("D", "M")  # Data in D
+            self._c_command("M", "D")    # *A = *SP
+                   
+        
 
     def _dec_sp(self):
         self._a_command("SP")
@@ -131,6 +178,11 @@ class CodeWriter:
         self._c_command("M", val)
         self._inc_sp()
 
+    def _pop_sp(self):
+        self._dec_sp()
+        self._c_command("A", "M")
+        # self._load_sp()
+        
     def _a_command(self, segment):
         cmd = f"@{str(segment)}\n"
         self.file.write(cmd)
