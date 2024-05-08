@@ -83,7 +83,8 @@ class CodeWriter:
             "this": "THIS",
             "that": "THAT",
             "constant": "CONST",
-            "temp": "TEMP"
+            "temp": "TEMP",
+            "pointer": "POINT"
             }
         segment = mapping.get(segment, segment)
         
@@ -120,6 +121,18 @@ class CodeWriter:
             self._c_command("A", "D+M") # A = Index + *Segment
             self._c_command("D", "M")   # D = *(Index + *Segment)
             self._set_sp("D")           # *SP = D (Index + Segment)
+            
+        if segment == "POINT":
+            
+            point_mapping = {
+                "0": "THIS",
+                "1": "THAT"
+            }
+            target = point_mapping[index]
+            
+            self._a_command(target)
+            self._c_command("D", "M")
+            self._set_sp("D")
 
     def pop(self, segment, index):
         if segment in ["LCL", "ARG", "THIS", "THAT"]:
@@ -156,11 +169,22 @@ class CodeWriter:
             
             self._a_command("R14")       
             self._c_command("A", "M")    # A = *R14
-
             self._c_command("M", "D")    # *A = *SP
-                   
-        
+            
+        if segment == "POINT":
+            point_mapping = {
+                "0": "THIS",
+                "1": "THAT"
+            }
+            target = point_mapping[index]
+            
+            self._pop_sp()  
+            self._c_command("D", "M")  
+            
+            self._a_command(target)
+            self._c_command("M", "D")    # *Target = *(--sp)
 
+            
     def _dec_sp(self):
         self._a_command("SP")
         self._c_command("M", "M-1")
@@ -181,14 +205,12 @@ class CodeWriter:
     def _pop_sp(self):
         self._dec_sp()
         self._c_command("A", "M")
-        # self._load_sp()
         
     def _a_command(self, segment):
         cmd = f"@{str(segment)}\n"
         self.file.write(cmd)
 
     def _c_command(self, dest="", comp="", jmp=""):
-
         dest = f"{dest}=" if dest else ""
         comp = str(comp)
         jmp = f";{jmp}" if jmp else ""
@@ -199,9 +221,8 @@ class CodeWriter:
         cmd = f"({label})\n"
         self.file.write(cmd)
 
-
     def write_command(self, command):
-        self.file.write(f"\\\\ {command}\n")
+        self.file.write(f"// {command}\n")
         
     def close(self):
         self.__del__()
