@@ -1,3 +1,5 @@
+import os
+import re
 from command_types import CommandType
 
 
@@ -5,78 +7,62 @@ class CodeWriter:
 
     def __init__(self, file) -> None:
 
+        file_name = os.path.basename(file)
+        self.file_name = re.sub(r"\.vm$", "", file_name)
         self.file = open(file, "w")
         self.label_count = 0
-
+            
     def write_arithmetic(self, command: str):
-        match command:
-            case "add":
-                self._binary("+")
-            case "sub":
-                self._binary("-")
-            case "neg":
-                self._unary("-")
-            case "eq":
-                self._compare("JEQ")  # true -1 false 0
-            case "gt":
-                self._compare("JGT")
-            case "lt":
-                self._compare("JLT")
-            case "and":
-                self._binary("&")
-            case "or":
-                self._binary("|")
-            case "not":
-                self._unary("!")
+        command_mappings = {
+             "add": "+",
+             "sub":"-", 
+             "neg":"-", 
+             "eq":"JEQ",
+             "gt":"JGT",
+             "lt":"JLT",
+             "and":"&", 
+             "or":"|", 
+             "not":"!"
+             }
+        cmd = command_mappings[command]
+        if command in ["add", "sub", "and", "or"]:
+            
+            self._pop_sp()                    # Y
+            self._c_command("D", "M")         # D = *Y
 
-    def _new_label(self, name):
-        label = name + str(self.label_count)
-        self.label_count += 1
-        return label
+            self._dec_sp()                    # X
+            self._set_sp(f"M{cmd}D")          # *X [+,-,&,|] *Y
+            
+        if command in ["neg", "not"]:
+            self._dec_sp()                    # Y
+            self._set_sp(f"{cmd}M")           # [-,&,|,!] *Y
+            
+        if command in ["eq", "gt", "lt"]:
+            #TODO add constants
+            true_label = "TRUE_LABEL" + str(self.label_count)
+            cont_label = "CONT_LABEL" + str(self.label_count)
+            self.label_count +=1
 
-    def _compare(self, cond):
-        # True -1 False 0
+            self._pop_sp()                     # X
+            self._c_command("D", "M")          # D = *X
 
-        true_label = self._new_label("TRUE_LABEL")
-        cont_label = self._new_label(("CONT_LABEL"))
+            self._pop_sp()                     # Y
+            self._c_command("D", "M-D")        # D = *Y - *X
 
-        # Loading data
-        self._pop_sp()              # X
-        self._c_command("D", "M")   # D = *X
+            self._a_command(true_label)        
+            self._c_command(comp="D", jmp=cmd) # Compare & JMP to true
 
-        self._pop_sp()              # Y
-        self._c_command("D", "M-D") # D = *Y - *X
+            self._set_sp("0")                   # False
+            self._a_command(cont_label)         
+            self._c_command(comp=0, jmp="JMP")  # Continue
 
-        # JMP to true
-        self._a_command(true_label)
-        self._c_command(comp="D", jmp=cond)
+            self._l_command(true_label)  # True
+            self._set_sp("-1")
 
-        # Else jmp to continue
-        self._set_sp("0") # False
-        self._a_command(cont_label)
-        self._c_command(comp=0, jmp="JMP")
-
-        # True
-        self._l_command(true_label)
-        self._set_sp("-1") # True
-
-        # Continue
-        self._l_command(cont_label)
-
-    def _binary(self, command):
-        
-        self._pop_sp()               # Y
-        self._c_command("D", "M")    # D = *Y
-
-        self._dec_sp()               # X
-        self._set_sp(f"M{command}D") # *X [+,-,&,|] *Y
-
-    def _unary(self, command):
-        self._dec_sp()               # Y
-        self._set_sp(f"{command}M")  # [-,&,|,!] *Y
+            self._l_command(cont_label)  # Continue
 
     def write_push_pop(self, command_type: CommandType, segment: str, index: int):
-        
+        #TODO create constants
         mapping = {
             "local": "LCL",
             "argument": "ARG",
@@ -84,7 +70,8 @@ class CodeWriter:
             "that": "THAT",
             "constant": "CONST",
             "temp": "TEMP",
-            "pointer": "POINT"
+            "pointer": "POINT",
+            "static": "STATIC"
             }
         segment = mapping.get(segment, segment)
         
@@ -102,17 +89,12 @@ class CodeWriter:
             self._set_sp("D")           # *SP = D (Index)
 
         if segment == "TEMP":
-            
             self._a_command(index)
             self._c_command("D", "A")   # D = Index
             self._a_command("5")        # @5
             self._c_command("A", "D+A") # A = Index + 5
             self._c_command("D", "M")   # D = *Index + 5
             self._set_sp("D")           # *SP = *D (Index+5)
-
-
-        #TODO: STATIC fille foo.vm push static 5 => creates foo.5 variable 
-        #TODO: pointer fixed memory segment, has 0 and 1 => pointer 0 should result in accesing THIS and 1 should result in acessing THAT (changes base address of this or that)
         
         if segment in ["LCL", "ARG", "THIS", "THAT"]:
             self._a_command(index)
@@ -123,17 +105,22 @@ class CodeWriter:
             self._set_sp("D")           # *SP = D (Index + Segment)
             
         if segment == "POINT":
-            
             point_mapping = {
                 "0": "THIS",
                 "1": "THAT"
             }
             target = point_mapping[index]
             
-            self._a_command(target)
-            self._c_command("D", "M")
-            self._set_sp("D")
-
+            self._a_command(target)     # @Target
+            self._c_command("D", "M")   # D = M
+            self._set_sp("D")           # *SP = *Target
+        
+        if segment == "STATIC":
+            target = f"{self.file_name}.{index}"
+            self._a_command(target)          # @ Target
+            self._c_command("D", "M")        # D = M
+            self._set_sp("D")                # *SP = *Target
+        
     def pop(self, segment, index):
         if segment in ["LCL", "ARG", "THIS", "THAT"]:
             self._a_command(index)       # @Index
@@ -153,7 +140,7 @@ class CodeWriter:
 
             self._c_command("M", "D")    # *A = *SP
             
-        if segment in ["TEMP"]:
+        if segment == "TEMP":
             
             self._a_command(index)       # Index
             self._c_command("D", "A")    # D = Index
@@ -178,13 +165,20 @@ class CodeWriter:
             }
             target = point_mapping[index]
             
-            self._pop_sp()  
-            self._c_command("D", "M")  
+            self._pop_sp()               # @SP--
+            self._c_command("D", "M")    # D = *SP
             
-            self._a_command(target)
+            self._a_command(target)      # @Target
             self._c_command("M", "D")    # *Target = *(--sp)
 
+        if segment == "STATIC":
+            target = f"{self.file_name}.{index}"
+            self._pop_sp()               # @SP--
+            self._c_command("D", "M")    # D = *SP
             
+            self._a_command(target)      # @Target
+            self._c_command("M", "D")    # *Target = *(--sp)
+
     def _dec_sp(self):
         self._a_command("SP")
         self._c_command("M", "M-1")
