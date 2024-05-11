@@ -56,10 +56,10 @@ class ASAMBLParser:
             return
 
         if self.command_type() == CommandType.A_COMMAND:
-            _pattern = r"[^@]{1}.*"
+            _pattern = r"[^@]{1}.*" # Text after @
 
         if self.command_type() == CommandType.L_COMMAND:
-            _pattern = r"[^(]{1}.*[^)]{1}"
+            _pattern = r"[^(]{1}.*[^)]{1}" # Text in between brackets ()
 
         symbol = re.search(_pattern, self.command)
         return symbol.group(0) if symbol else None

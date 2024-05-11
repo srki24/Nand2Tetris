@@ -211,11 +211,13 @@ class CodeWriter:
         cmd = dest + comp + jmp + "\n"
         self.file.write(cmd)
 
-    def _l_command(self, label):
+    def _l_command(self, label: str):
+        if label[0].isnumeric():
+            raise ValueError(f"Label name cannot start with a digit! Labem: {label}")
         cmd = f"({label})\n"
         self.file.write(cmd)
 
-    def write_command(self, command):
+    def write_command(self, command: str):
         self.file.write(f"// {command}\n")
         
     def close(self):
