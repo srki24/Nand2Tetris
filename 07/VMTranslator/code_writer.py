@@ -6,12 +6,10 @@ from command_types import CommandType
 class CodeWriter:
 
     def __init__(self) -> None:
-
         self.curr_file = None    
         self.output_file = None
         self.label_count = 0
     
-        
     def write_arithmetic(self, command: str):
         command_mappings = {
              "add": "+",
@@ -61,108 +59,85 @@ class CodeWriter:
 
             self._l_command(cont_label)  # Continue
 
-    def write_push_pop(self, command_type: CommandType, segment: str, index: int):
+    def _get_seg_addr(self, segment):
         #TODO create constants
         mapping = {
-            "local": "LCL",
+            "local":    "LCL",
             "argument": "ARG",
-            "this": "THIS",
-            "that": "THAT",
-            "constant": "CONST",
-            "temp": "TEMP",
-            "pointer": "POINT",
-            "static": "STATIC"
+            "this":     "THIS",
+            "that":     "THAT",
+            "temp":     "5"    # Temp has always address of 5
             }
         segment = mapping.get(segment, segment)
+        return segment
+
+    def write_push(self, segment, index):
+        seg_addr = self._get_seg_addr(segment)
         
-        if command_type == CommandType.C_PUSH:
-            self.push(segment, index)
-
-        if command_type == CommandType.C_POP:
-            self.pop(segment, index)
-
-    def push(self, segment, index):
-
-        if segment == "CONST":
+        if segment == "constant":
             self._a_command(index)
-            self._c_command("D", "A")   # D = Index
-            self._set_sp("D")           # *SP = D (Index)
+            self._c_command("D", "A")       # D = Index
+            self._set_sp("D")               # *SP = D (Index)
 
-        if segment == "TEMP":
+        if segment in ["local", "argument", "this", "that", "temp"]:
             self._a_command(index)
-            self._c_command("D", "A")   # D = Index
-            self._a_command("5")        # @5
-            self._c_command("A", "D+A") # A = Index + 5
-            self._c_command("D", "M")   # D = *Index + 5
-            self._set_sp("D")           # *SP = *D (Index+5)
-        
-        if segment in ["LCL", "ARG", "THIS", "THAT"]:
-            self._a_command(index)
-            self._c_command("D", "A")   # D = Index
-            self._a_command(segment)    # @Segment
-            self._c_command("A", "D+M") # A = Index + *Segment
-            self._c_command("D", "M")   # D = *(Index + *Segment)
-            self._set_sp("D")           # *SP = D (Index + Segment)
+            self._c_command("D", "A")       # D = Index
+            self._a_command(seg_addr)       # @Segment
             
-        if segment == "POINT":
+            if segment == "temp":           # Address itself
+                self._c_command("A", "D+A") # A = Index + Address
+            else:                           # Load address
+                self._c_command("A", "D+M") # A = Index + *Segment
+            
+            self._c_command("D", "M")       # D = *(Index + *Segment)
+            self._set_sp("D")               # *SP = D (Index + Segment)
+            
+        if segment == "pointer":
             point_mapping = {
                 "0": "THIS",
                 "1": "THAT"
             }
             target = point_mapping[index]
             
-            self._a_command(target)     # @Target
-            self._c_command("D", "M")   # D = M
-            self._set_sp("D")           # *SP = *Target
+            self._a_command(target)         # @Target
+            self._c_command("D", "M")       # D = M
+            self._set_sp("D")               # *SP = *Target
         
-        if segment == "STATIC":
-            
+        if segment == "static":
             if not self.curr_file:
                 raise ValueError("Current file not set")
             
             target = f"{self.curr_file}.{index}"
-            self._a_command(target)          # @ Target
-            self._c_command("D", "M")        # D = M
-            self._set_sp("D")                # *SP = *Target
+            self._a_command(target)         # @ Target
+            self._c_command("D", "M")       # D = M
+            self._set_sp("D")               # *SP = *Target
         
-    def pop(self, segment, index):
-        if segment in ["LCL", "ARG", "THIS", "THAT"]:
-            self._a_command(index)       # @Index
-            self._c_command("D", "A")    # D = Index
+    def write_pop(self, segment, index):
+        seg_addr = self._get_seg_addr(segment)
+        
+        if segment in ["local", "argument", "this", "that", "temp"]:
+            self._a_command(index)          # @Index
+            self._c_command("D", "A")       # D = Index
 
-            self._a_command(segment)     # @Segment
-            self._c_command("D", "D+M")  # D = Index + *Segment
+            self._a_command(seg_addr)       # @Segment
+            
+            if segment == "temp":           # Address itself
+                self._c_command("D", "D+A") # D = Index + Address
+            else:                           # Load address
+                self._c_command("D", "D+M") # D = Index + *Segment
             
             self._a_command("R14")
-            self._c_command("M", "D")    # *R14 = Index + Segment
+            self._c_command("M", "D")       # *R14 = Index + Segment
             
             self._pop_sp()
-            self._c_command("D", "M")    # D = *SP
+            self._c_command("D", "M")       # D = *SP
             
             self._a_command("R14")       
-            self._c_command("A", "M")    # A = *R14
+            self._c_command("A", "M")       # A = *R14
 
-            self._c_command("M", "D")    # *A = *SP
+            self._c_command("M", "D")       # *A = *SP
             
-        if segment == "TEMP":
-            
-            self._a_command(index)       # Index
-            self._c_command("D", "A")    # D = Index
-            
-            self._a_command("5")         # @5 - Temp always start at 5
-            self._c_command("D", "A+D")  # D = 5 + Index
-
-            self._a_command("R14")     
-            self._c_command("M", "D")    # *R14 = 5 + Index
-            
-            self._pop_sp()
-            self._c_command("D", "M")    # D = *SP
-            
-            self._a_command("R14")       
-            self._c_command("A", "M")    # A = *R14
-            self._c_command("M", "D")    # *A = *SP
-            
-        if segment == "POINT":
+        if segment == "pointer":
             point_mapping = {
                 "0": "THIS",
                 "1": "THAT"
@@ -175,14 +150,33 @@ class CodeWriter:
             self._a_command(target)      # @Target
             self._c_command("M", "D")    # *Target = *(--sp)
 
-        if segment == "STATIC":
+        if segment == "static":
             target = f"{self.curr_file}.{index}"
+            
             self._pop_sp()               # @SP--
             self._c_command("D", "M")    # D = *SP
             
             self._a_command(target)      # @Target
             self._c_command("M", "D")    # *Target = *(--sp)
 
+    def write_label(self, label):
+        ...
+        
+    def write_goto(self, dest):
+        ...
+        
+    def write_if(self, dest):
+        ...
+        
+    def write_call(self, name, args):
+        ...
+        
+    def write_return(self, addr):
+        ...
+        
+    def write_function(self, name, args):
+        ...
+        
     def _dec_sp(self):
         self._a_command("SP")
         self._c_command("M", "M-1")
@@ -206,25 +200,25 @@ class CodeWriter:
         
     def _a_command(self, segment):
         cmd = f"@{str(segment)}\n"
-        self._write(cmd)
+        self._write_to_file(cmd)
 
     def _c_command(self, dest="", comp="", jmp=""):
         dest = f"{dest}=" if dest else ""
         comp = str(comp)
         jmp = f";{jmp}" if jmp else ""
         cmd = dest + comp + jmp + "\n"
-        self._write(cmd)
+        self._write_to_file(cmd)
 
     def _l_command(self, label: str):
         if label[0].isnumeric():
             raise ValueError(f"Label name cannot start with a digit! Labem: {label}")
         cmd = f"({label})\n"
-        self._write(cmd)
+        self._write_to_file(cmd)
 
     def write_command(self, command: str):
-        self._write(f"// {command}\n")
+        self._write_to_file(f"// {command}\n")
        
-    def _write(self, cmd):
+    def _write_to_file(self, cmd):
         if not self.output_file:
             raise ValueError("Output file must be set!")
         self.output_file.write(cmd)
