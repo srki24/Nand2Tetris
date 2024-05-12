@@ -5,13 +5,13 @@ from command_types import CommandType
 
 class CodeWriter:
 
-    def __init__(self, file) -> None:
+    def __init__(self) -> None:
 
-        file_name = os.path.basename(file)
-        self.file_name = re.sub(r"\.vm$", "", file_name)
-        self.file = open(file, "w")
+        self.curr_file = None    
+        self.output_file = None
         self.label_count = 0
-            
+    
+        
     def write_arithmetic(self, command: str):
         command_mappings = {
              "add": "+",
@@ -116,7 +116,11 @@ class CodeWriter:
             self._set_sp("D")           # *SP = *Target
         
         if segment == "STATIC":
-            target = f"{self.file_name}.{index}"
+            
+            if not self.curr_file:
+                raise ValueError("Current file not set")
+            
+            target = f"{self.curr_file}.{index}"
             self._a_command(target)          # @ Target
             self._c_command("D", "M")        # D = M
             self._set_sp("D")                # *SP = *Target
@@ -172,7 +176,7 @@ class CodeWriter:
             self._c_command("M", "D")    # *Target = *(--sp)
 
         if segment == "STATIC":
-            target = f"{self.file_name}.{index}"
+            target = f"{self.curr_file}.{index}"
             self._pop_sp()               # @SP--
             self._c_command("D", "M")    # D = *SP
             
@@ -202,26 +206,39 @@ class CodeWriter:
         
     def _a_command(self, segment):
         cmd = f"@{str(segment)}\n"
-        self.file.write(cmd)
+        self._write(cmd)
 
     def _c_command(self, dest="", comp="", jmp=""):
         dest = f"{dest}=" if dest else ""
         comp = str(comp)
         jmp = f";{jmp}" if jmp else ""
         cmd = dest + comp + jmp + "\n"
-        self.file.write(cmd)
+        self._write(cmd)
 
     def _l_command(self, label: str):
         if label[0].isnumeric():
             raise ValueError(f"Label name cannot start with a digit! Labem: {label}")
         cmd = f"({label})\n"
-        self.file.write(cmd)
+        self._write(cmd)
 
     def write_command(self, command: str):
-        self.file.write(f"// {command}\n")
+        self._write(f"// {command}\n")
+       
+    def _write(self, cmd):
+        if not self.output_file:
+            raise ValueError("Output file must be set!")
+        self.output_file.write(cmd)
         
     def close(self):
         self.__del__()
 
+    def set_output_file(self, file):
+        self.output_file = open(file, "w")
+
+    def set_input_file(self, file_path):
+        curr_file = os.path.basename(file_path)
+        self.curr_file = re.sub(r"\.vm$", "", curr_file)
+        
     def __del__(self):
-        self.file.close()
+        if self.output_file:
+            self.output_file.close()
