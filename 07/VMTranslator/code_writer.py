@@ -211,7 +211,7 @@ class CodeWriter:
 
     def _l_command(self, label: str):
         if label[0].isnumeric():
-            raise ValueError(f"Label name cannot start with a digit! Labem: {label}")
+            raise ValueError(f"Label name cannot start with a digit! Label: {label}")
         cmd = f"({label})\n"
         self._write_to_file(cmd)
 
@@ -223,9 +223,6 @@ class CodeWriter:
             raise ValueError("Output file must be set!")
         self.output_file.write(cmd)
         
-    def close(self):
-        self.__del__()
-
     def set_output_file(self, file):
         self.output_file = open(file, "w")
 

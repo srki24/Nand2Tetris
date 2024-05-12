@@ -49,14 +49,14 @@ def parse_file(parser: VMParser, code_writer: CodeWriter):
             code_writer.write_return(parser.arg1())
 
         if parser.c_type == CommandType.C_FUNCTION:
-            code_writer.write_function(parser.arg1())
+            code_writer.write_function(parser.arg1(), parser.arg2())
 
 
 if __name__ == "__main__":
 
     fp = get_filepath()
     code_writer = CodeWriter()
-
+    parser = VMParser()
     if os.path.isfile(fp):  # Single file
         if not fp.endswith("vm"):
             raise ValueError("Unknown file type .vm expected")
@@ -80,9 +80,8 @@ if __name__ == "__main__":
     code_writer.set_output_file(out_path)
 
     for file in files:
-        parser = VMParser(file)
+        parser.set_input_file(file)
         code_writer.set_input_file(file)
 
         parse_file(parser, code_writer)
 
-    code_writer.close()

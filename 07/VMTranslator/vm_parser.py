@@ -4,7 +4,7 @@ from command_types import CommandType
 
 class VMParser:
 
-    def __init__(self, file) -> None:
+    def set_input_file(self, file) -> None:
         self.file = open(file)
         self.command = None
         self.c_type = None
