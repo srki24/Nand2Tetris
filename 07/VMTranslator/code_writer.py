@@ -144,29 +144,33 @@ class CodeWriter:
             }
             target = point_mapping[index]
             
-            self._pop_sp()               # @SP--
-            self._c_command("D", "M")    # D = *SP
-            
-            self._a_command(target)      # @Target
-            self._c_command("M", "D")    # *Target = *(--sp)
+            self._pop_sp()                  # @SP--
+            self._c_command("D", "M")       # D = *SP
+               
+            self._a_command(target)         # @Target
+            self._c_command("M", "D")       # *Target = *(--SP)
 
         if segment == "static":
             target = f"{self.curr_file}.{index}"
             
-            self._pop_sp()               # @SP--
-            self._c_command("D", "M")    # D = *SP
-            
-            self._a_command(target)      # @Target
-            self._c_command("M", "D")    # *Target = *(--sp)
+            self._pop_sp()                   # @SP--
+            self._c_command("D", "M")        # D = *SP
+                
+            self._a_command(target)          # @Target
+            self._c_command("M", "D")        # *Target = *(--sp)
 
     def write_label(self, label):
-        ...
+        self._l_command(label)               # (Label)
         
     def write_goto(self, dest):
-        ...
+        self._a_command(dest)                # @Dest 
+        self._c_command(comp=0, jmp="JMP")   # JMP
         
     def write_if(self, dest):
-        ...
+        self._pop_sp()                       # @SP--
+        self._c_command("D", "M")            # D = *SP
+        self._a_command(dest)                # @Dest
+        self._c_command(comp="D", jmp="JNE") # *SP != 0; JMP
         
     def write_call(self, name, args):
         ...
