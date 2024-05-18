@@ -42,14 +42,14 @@ def parse_file(parser: VMParser, code_writer: CodeWriter):
         if parser.c_type == CommandType.C_IF:
             code_writer.write_if(parser.arg1())
 
+        if parser.c_type == CommandType.C_FUNCTION:
+            code_writer.write_function(parser.arg1(), parser.arg2())
+
         if parser.c_type == CommandType.C_CALL:
             code_writer.write_call(parser.arg1(), parser.arg2())
 
         if parser.c_type == CommandType.C_RETURN:
-            code_writer.write_return(parser.arg1())
-
-        if parser.c_type == CommandType.C_FUNCTION:
-            code_writer.write_function(parser.arg1(), parser.arg2())
+            code_writer.write_return()
 
 
 if __name__ == "__main__":

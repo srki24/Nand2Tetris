@@ -175,11 +175,73 @@ class CodeWriter:
     def write_call(self, name, args):
         ...
         
-    def write_return(self, addr):
-        ...
+    def write_return(self):
+        
+        self._a_command("ARG")
+        self._c_command("D", "M")            # D = *ARG
+        self._a_command("R15")               # R15 = SP
+        self._c_command("M", "D")
+       
+        # FRAME
+        self._a_command("LCL")
+        self._c_command("D", "M")            # D = *LCL
+        
+        self._a_command("R14")
+        self._c_command("M", "D")
+        
+        # THAT
+        self._a_command("R14")
+        self._c_command("M", "D-1")          
+        self._c_command("A", "M")            # *FRAME - 1
+        self._c_command("D", "M")                     
+        self._a_command("THAT")
+        self._c_command("M", "D")            # *THAT = *(*FRAME - 1)
+        
+        # THIS
+        self._a_command("R14")
+        self._c_command("M", "M-1")          # *R14 = *R14-1
+        self._c_command("A", "M")            # *FRMAE - 2
+        self._c_command("D", "M")             
+        self._a_command("THIS")
+        self._c_command("M", "D")            # *THIS = *FRANE - 2
+        
+        # ARG
+        self._a_command("R14")
+        self._c_command("M", "M-1")          # *R14 = *R14-1
+        self._c_command("A", "M")            # *FRAME - 3
+        self._c_command("D", "M")             
+        self._a_command("ARG") 
+        self._c_command("M", "D")            # *ARG = *FRAME - 3
+        
+        # LCL
+        self._a_command("R14")
+        self._c_command("M", "M-1")          # *R14 = *R14-1
+        self._c_command("A", "M")            # @ FRMAE - 4
+        self._c_command("D", "M")             
+        self._a_command("LCL")
+        self._c_command("M", "D")            # *LCL = *FRAME - 4
+       
+        # SP
+        self._pop_sp()
+        self._c_command("D", "M")            # New SP value
+        
+        self._a_command("R15")
+        self._c_command("A", "M")
+        self._c_command("M", "D")
+        
+        self._c_command("D", "A")
+        self._a_command("SP")
+        self._c_command("M", "D+1")
+       
+        # # RETURN
+        self._a_command("R14")
+        self._c_command("M", "M-1")          # *R14 = *R14-1
+        self._c_command("A", "M")            # RET = *FRAME-5
+        self._c_command("D","M", "JMP")
         
     def write_function(self, name, args):
-        ...
+        for _ in range(int(args)):
+            self._set_sp("0")
         
     def _dec_sp(self):
         self._a_command("SP")
@@ -188,7 +250,7 @@ class CodeWriter:
     def _inc_sp(self):
         self._a_command("SP")
         self._c_command("M", "M+1")
-
+        
     def _load_sp(self):
         self._a_command("SP")
         self._c_command("A", "M")
