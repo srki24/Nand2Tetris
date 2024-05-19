@@ -107,7 +107,7 @@ D=M
 @R14
 M=D
 @R14
-M=D-1
+M=M-1
 A=M
 D=M
 @THAT
@@ -140,3 +140,8 @@ M=D
 D=A
 @SP
 M=D+1
+@R14
+M=M-1
+A=M
+D=M
+A=D;JMP
