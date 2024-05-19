@@ -74,10 +74,14 @@ if __name__ == "__main__":
             os.path.join(fp, file) for file in os.listdir(fp) if file.endswith(".vm")
         ]
 
+        
     if not files:
         raise ValueError("No .vm files found in directory!")
 
     code_writer.set_output_file(out_path)
+    
+    if len(files) > 1:
+        code_writer.write_init()
 
     for file in files:
         parser.set_input_file(file)

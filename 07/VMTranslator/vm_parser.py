@@ -63,6 +63,7 @@ class VMParser:
         if self.command_type() in [
             CommandType.C_POP,
             CommandType.C_PUSH,
+            CommandType.C_CALL,
             CommandType.C_FUNCTION,
         ]:
             return self.command.split(" ")[2]
