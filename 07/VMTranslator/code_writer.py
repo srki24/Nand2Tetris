@@ -59,7 +59,7 @@ class CodeWriter:
             self._l_command(cont_label)        # Continue
 
     def _create_label(self, label):
-        label = f"{label}-{str(self.label_count)}"
+        label = f"{label}${str(self.label_count)}"
         self.label_count +=1
         return label
     
@@ -115,7 +115,7 @@ class CodeWriter:
         
     def write_pop(self, segment, index):
         seg_addr = self._get_seg_addr(segment)
-        
+        temp_pop = self._create_label("TEMP_POP")
         if segment in ["local", "argument", "this", "that", "temp"]:
             self._load_addr(index)          # D = @Index
 
@@ -169,39 +169,37 @@ class CodeWriter:
             
     def write_call(self, name, args):
         #TODO: ADD CONSTANT
-        ret = self._create_label("RETURN")
+        ret = self._create_label(f"RETURN_{name}")
         
         # Ret
-        self._load_addr(ret)   # D = @RET
-        self._push_sp("D")     # SP = @RET
+        self._load_addr(ret)     # D = @RET
+        self._push_sp("D")       # SP = @RET
         
         # LCL
-        self._load_reg("LCL")  # D = *LCL
-        self._push_sp("D")     # SP = *LC
+        self._load_reg("LCL")    # D = *LCL
+        self._push_sp("D")       # SP = *LC
         
         # ARG
-        self._load_reg("ARG")  # D = *ARG
-        self._push_sp("D")     # SP = *ARG
+        self._load_reg("ARG")     # D = *ARG
+        self._push_sp("D")        # SP = *ARG
           
         # THIS
-        self._load_reg("THIS")  # D = *THIS
-        self._push_sp("D")      # SP = *THAT
+        self._load_reg("THIS")    # D = *THIS
+        self._push_sp("D")        # SP = *THAT
         
         # THAT
-        self._load_reg("THAT")  # D = *THAT
-        self._push_sp("D")      # SP = *THAT
+        self._load_reg("THAT")    # D = *THAT
+        self._push_sp("D")        # SP = *THAT
       
         # LCL = *SP
-        self._load_reg("SP")        # D = *SP
-        self._set_reg("LCL", "D")   # LCL = *SP 
+        self._load_reg("SP")      # D = *SP
+        self._set_reg("LCL", "D") # LCL = *SP 
         
-        
-        self._load_addr(5+int(args)) # D = @5 + args
-        
-        self._a_command("SP")        # @SP
-        self._c_command("D", "M-D")
-        
-        self._set_reg("ARG", "D")
+        # ARG
+        self._load_reg("SP")          # D = *SP
+        self._a_command(5+int(args))  # A = 5 + args
+        self._c_command("D", "D-A")   # D = *SP - A
+        self._set_reg("ARG", "D")     # ARG = *SP - args - 5
         
         # JMP to function
         self.write_goto(name)
@@ -210,13 +208,26 @@ class CodeWriter:
         self._l_command(ret)
         
     def write_return(self):
-        self._load_reg("ARG")                # D = *ARG
-        self._set_reg("R15", "D")            # R15 = *ARG - return SP
-       
-        # FRAME
-        self._load_reg("LCL")                # D = *LCL
-        self._set_reg("R14", "D")            # R14 = *LCL
         
+        # FRAME
+        self._load_reg("LCL")              # D = *LCL
+        self._set_reg("R14", "D")          # R14 = *LCL
+      
+        # Return address 
+        self._load_reg("LCL")               # @LCL
+        self._a_command("5")
+        self._c_command("A", "D-A")         # A = *LCL - 5
+        self._c_command("D", "M")           # D = *(*LCL-5)
+        self._set_reg("R15", "D")
+       
+        # Updating SP
+        self._pop_reg("SP")                 # D = *SP
+        self._a_command("ARG")              # @ARG
+        self._c_command("A", "M")           # A = *ARG
+        self._c_command("M", "D")           # *A = *SP
+        self._c_command("D", "A+1")         # D = A+1
+        self._set_reg("SP", "D")            # SP = *ARG + 1
+
         # THAT
         self._pop_reg("R14")                # D = *R14 -1
         self._set_reg("THAT", "D")          # *THAT = *(*FRAME - 1)
@@ -233,21 +244,13 @@ class CodeWriter:
         self._pop_reg("R14")                # D = *R14-1
         self._set_reg("LCL", "D")           # *LCL = *FRAME - 4
        
-        # Updating SP
-        self._pop_reg("SP")                 # D = *SP
-        self._a_command("R15")
-        self._c_command("A", "M")           # @R15
-        self._c_command("M", "D")           # @R15 = *SP
-        self._c_command("D", "A")           # D = @R15
-        
-        self._set_reg("SP", "D+1")          # SP = @R15 + 1
-       
         # Return address (PC)
-        self._pop_reg("R14")                # D = *R14 -1
-        self._c_command("A", "D", "JMP")    # RET = *FRAME - 5
+        self._load_reg("R15")
+        self._c_command("A", "M")
+        self._c_command(comp=0, jmp="JMP")
         
     def write_function(self, name, args):
-        self._l_command(name)      # (name)
+        self._l_command(name) 
         for _ in range(int(args)):
             self._push_sp("0")
         
@@ -268,9 +271,9 @@ class CodeWriter:
        
     def _push_sp(self, val):
         self._a_command("SP")
-        self._c_command("A", "M")
+        self._c_command("M", "M+1")
+        self._c_command("A", "M-1")
         self._c_command("M", val)
-        self._set_reg("SP", "M+1")
 
     def _pop_reg(self, reg):
         self._dec_reg(reg)
@@ -294,8 +297,8 @@ class CodeWriter:
         cmd = f"({label})\n"
         self._write_to_file(cmd)
 
-    def write_command(self, command: str):
-        self._write_to_file(f"// {command}\n")
+    def write_comment(self, comment: str):
+        self._write_to_file(f"// {comment}\n")
        
     def _write_to_file(self, cmd):
         if not self.output_file:

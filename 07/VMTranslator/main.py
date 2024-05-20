@@ -22,7 +22,7 @@ def parse_file(parser: VMParser, code_writer: CodeWriter):
     while parser.has_more_commands():
         parser.advance()
 
-        code_writer.write_command(parser.command)
+        code_writer.write_comment(parser.command)
         
         if parser.c_type == CommandType.C_ARITHMETICS:
             code_writer.write_arithmetic(parser.command)
@@ -81,6 +81,7 @@ if __name__ == "__main__":
     code_writer.set_output_file(out_path)
     
     if len(files) > 1:
+        code_writer.write_comment("Initializing...")
         code_writer.write_init()
 
     for file in files:
