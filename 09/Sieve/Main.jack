@@ -1,0 +1,63 @@
+class Main {
+    
+    function void main() {
+        var int n;
+        var int res;
+
+        do Output.printString("This program will the nTh prime numbers using Sieve of Eratosthenes!");
+        do Output.println();
+        do Output.printString("Due to the memory limit it can calculate up to 1500th prime number!");
+        do Output.println();
+        let n = Keyboard.readInt("Enter a number: ");
+
+        let res = Main.calculateSieve(n);
+
+        do Output.printInt(n); 
+        do Output.printString("th prime number is: ");
+        do Output.printInt(res);
+        do Output.println();
+
+        return;
+    }
+
+    function int calculateSieve(int n) {
+        var Array primes;
+        var int p, test;
+        var int cnt;
+
+        let primes = Array.new(12554);
+        let p = 2;
+        let cnt = 1;
+        
+        do Main.fill(primes, 1, true);
+
+        while(p < 12554) {
+
+        if(primes[p]){
+
+            do Main.fill(primes, p, false);
+
+            if (cnt = n) {return p;}
+            let cnt = cnt + 1;
+        }
+        let p = p + 1;
+        }
+
+        do Output.printString("Out of memory!");
+        do Output.println();
+
+        return -1;
+    }
+
+    function void fill(Array a, int step, bool value) {
+        var int inc;
+        let inc = step;
+
+        while (step < 12554) {
+            let a[step] = value;
+            let step = step + inc;
+        }
+        return;
+    }
+
+}
