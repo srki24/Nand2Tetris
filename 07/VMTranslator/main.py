@@ -1,6 +1,5 @@
 import argparse
 import os
-import sys
 from vm_parser import VMParser
 from code_writer import CodeWriter
 from command_types import CommandType
@@ -58,7 +57,7 @@ if __name__ == "__main__":
     code_writer = CodeWriter()
     parser = VMParser()
     if os.path.isfile(fp):  # Single file
-        if not fp.endswith("vm"):
+        if not fp.endswith(".vm"):
             raise ValueError("Unknown file type .vm expected")
 
         out_path = fp.replace(".vm", ".asm")
@@ -76,7 +75,7 @@ if __name__ == "__main__":
 
         
     if not files:
-        raise ValueError("No .vm files found in directory!")
+        raise ValueError("No .vm files found!")
 
     code_writer.set_output_file(out_path)
     
