@@ -24,9 +24,9 @@ class JackTokenizer:
         self.file = self.file.strip()
         # Checking...
         for token in Tokens:
-            if res:= re.search(token.value, self.file):
+            if res:= re.findall(token.value, self.file):
                 self.next_token = token
-                self.next_value = res.group(0)
+                self.next_value = res.pop()
                 return True
         
         # No more files
@@ -50,7 +50,7 @@ class JackTokenizer:
     def clean_file(self, text):
         _eol_comment = r"//.*"
         text = re.sub(_eol_comment, "", text)
-        _multiline_comments = r"(\/\*)(.*)((?:\n.*)*)(\*\/)" # /* Multiline text */
+        _multiline_comments = r"(?s)/\*.*?\*/"
         text = re.sub(_multiline_comments, "", text)
 
         _multiple_spaces = r"\s+"
