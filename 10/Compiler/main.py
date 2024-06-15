@@ -15,27 +15,30 @@ def get_filepath():
 
     return fp
 
+
 def tokenize(file):
     tokenizer = JackTokenizer(file=file)
     while tokenizer.has_more_tokens():
         tokenizer.advance()
         yield tokenizer
 
+
 def _generate_tokens(file):
 
     doc = Document()
-    root = doc.createElement('tokens')
+    root = doc.createElement("tokens")
     doc.appendChild(root)
     for tok in tokenize(file):
 
         element = doc.createElement(tok.token.name)
         element.appendChild(doc.createTextNode(f" {tok.value} "))
-        root.appendChild(element)        
-    
-    tree = root.toprettyxml(indent='')
-    with open(file.replace('.jack', '-test.xml'), 'w') as output:
+        root.appendChild(element)
+
+    tree = root.toprettyxml(indent="")
+    with open(file.replace(".jack", "-test.xml"), "w") as output:
         output.write(tree)
-   
+
+
 if __name__ == "__main__":
 
     fp = get_filepath()
