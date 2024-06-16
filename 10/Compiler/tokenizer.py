@@ -73,7 +73,6 @@ class JackTokenizer:
     def tokenize(self):
         while self.has_more_tokens():
             self.advance()
-            # yield self
         
         self._xml_write_file()
 

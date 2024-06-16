@@ -36,3 +36,4 @@ if __name__ == "__main__":
     for file in files:
 
         compiler = JackCompiler(file)
+        compiler.compile_class()
