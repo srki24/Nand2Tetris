@@ -15,7 +15,6 @@ class JackCompiler:
         self.doc = Document()
 
     def _xml_add_element(self, parent: Node, tag: str, value: Optional[str] = None):
-
         element = self.doc.createElement(tag)
 
         if value:
@@ -25,243 +24,191 @@ class JackCompiler:
         parent.appendChild(element)
         return element
 
-    def parse_element(
+    def consume(
         self,
         parent,
-        expected_token: Optional[Tokens] = None,
-        expected_constants: Optional[Constant] | Optional[list[Constant]] = None
+        token: Optional[Tokens] = None,
+        const: Optional[Constant] | Optional[list[Constant]] = None
     ):
+        tok_check = self.is_next(token=token, const=const)
         self.tokenizer.advance()
 
-        tok_check = self._is_token(which='this',
-                                   expected_token=expected_token,
-                                   expected_constants=expected_constants)
+        actual_tok = self.tokenizer.token.name
+        actual_val = self.tokenizer.value
 
         if not tok_check:
-            raise TypeError(f"Expected token: {expected_token}; constants: {expected_constants}",
-                            f"Got token: {self.tokenizer.token.name}; constant: {self.tokenizer.value}")
+            raise TypeError(
+                f"Expected token: {token}; constants: {const}",
+                f"Got token: {actual_tok}; constant: {actual_val}"
+            )
 
-        print(self.tokenizer.value)
-        self._xml_add_element(parent=parent,
-                              tag=self.tokenizer.token.name,
-                              value=self.tokenizer.value)
+        self._xml_add_element(parent=parent, tag=actual_tok, value=actual_val)
+        print(actual_tok, actual_val)
 
     def compile_class(self):
         CLASS = self._xml_add_element(self.doc, "class")
 
-        self.parse_element(parent=CLASS,
-                           expected_constants=Keywords.CLASS)
+        self.consume(parent=CLASS, const=Keywords.CLASS)
 
-        self.parse_element(parent=CLASS,
-                           expected_token=Tokens.identifier)
+        self.consume(parent=CLASS, token=Tokens.identifier)
 
-        self.parse_element(parent=CLASS,
-                           expected_constants=Symbols.OPEN_CURLY_BRACKET)
+        self.consume(parent=CLASS, const=Symbols.OPEN_CURLY)
 
-        while self._is_token(which='next',
-                             expected_constants=[Keywords.STATIC,
-                                                 Keywords.FIELD]):
+        while self.is_next(const=[Keywords.STATIC, Keywords.FIELD]):
             self.compile_class_var_dec(parent=CLASS)
 
-        while self._is_token(which='next',
-                             expected_constants=[Keywords.CONSTRUCTOR,
-                                                 Keywords.FUNCTION,
-                                                 Keywords.METHOD]):
+        while self.is_next(const=[Keywords.CONSTRUCTOR, Keywords.FUNCTION, Keywords.METHOD]):
             self.compile_subroutine_dec(parent=CLASS)
 
-        self.parse_element(
-            parent=CLASS,
-            expected_constants=Symbols.CLOSE_CURLY_BRACKET)
+        self.consume(parent=CLASS, const=Symbols.CLOSE_CURLY)
 
     def compile_class_var_dec(self, parent: Node):
 
         CLASS_VAR_DEC = self._xml_add_element(parent=parent, tag="classVarDec")
 
-        self.parse_element(parent=CLASS_VAR_DEC,
-                           expected_constants=[Keywords.STATIC,
-                                               Keywords.FIELD])
+        self.consume(parent=CLASS_VAR_DEC, const=[Keywords.STATIC,
+                                                        Keywords.FIELD])
 
-        self.parse_type(CLASS_VAR_DEC)
+        self.compile_type(CLASS_VAR_DEC)
 
-        self.parse_element(
-            parent=CLASS_VAR_DEC,
-            expected_token=Tokens.identifier
-        )
+        self.consume(parent=CLASS_VAR_DEC, token=Tokens.identifier)
 
-        while self._is_token(which='next',
-                             expected_constants=Symbols.COMMA):
+        while self.is_next(const=Symbols.COMMA):
+            self.consume(parent=CLASS_VAR_DEC, const=Symbols.COMMA)
+            self.consume(parent=CLASS_VAR_DEC, token=Tokens.identifier)
 
-            self.parse_element(parent=CLASS_VAR_DEC,
-                               expected_constants=Symbols.COMMA)
+    def compile_type(self, parent: Node):
 
-            self.parse_element(parent=CLASS_VAR_DEC,
-                               expected_token=Tokens.identifier)
+        const = [Keywords.INT, Keywords.CHAR, Keywords.BOOL]
+        tok = Tokens.identifier
 
-    def parse_type(self, parent: Node):
-
-        if self._is_token(which='next',
-                          expected_constants=[Keywords.INT,
-                                              Keywords.CHAR,
-                                              Keywords.BOOLEAN]
-                          ):
-            expected_token = None
-            expected_constants = [Keywords.INT,
-                                  Keywords.CHAR,
-                                  Keywords.BOOLEAN]
-
-        elif self._is_token(which='next',
-                            expected_token=Tokens.identifier):
-            expected_token = Tokens.identifier
-            expected_constants = None
-
+        if self.is_next(const=const):
+            tok = None
+        elif self.is_next(token=Tokens.identifier):
+            const = None
         else:
-            raise TypeError(f"Failed to compile TYPE. ",
-                            f"Expect Symbol[INT, CHAR, BOOL] or Identifier got ",
-                            f"token: {self.tokenizer.next_token.name}, constant: '{self.tokenizer.next_value}'")
+            raise TypeError(
+                f"Failed to compile TYPE. ",
+                f"Expect either Symbol[INT, CHAR, BOOL] or Class Identifier got ",
+                f"token: {self.tokenizer.next_token.name}, constant: '{self.tokenizer.next_value}'"
+            )
 
-        self.parse_element(parent=parent,
-                           expected_token=expected_token,
-                           expected_constants=expected_constants)
+        self.consume(parent=parent, token=tok, const=const)
 
     def compile_subroutine_dec(self, parent: Node):
 
-        SUBROUTINE_DEC = self._xml_add_element(parent=parent,
-                                               tag="subroutineDec")
+        SUB_DEC = self._xml_add_element(parent=parent, tag="subroutineDec")
 
-        self.parse_element(parent=SUBROUTINE_DEC,
-                           expected_constants=[Keywords.CONSTRUCTOR,
-                                               Keywords.FUNCTION,
-                                               Keywords.METHOD])
+        self.consume(parent=SUB_DEC, const=[Keywords.CONSTRUCTOR,
+                                                  Keywords.FUNCTION,
+                                                  Keywords.METHOD])
 
-        if self._is_token(which='next',
-                          expected_constants=Keywords.VOID):
-
-            self.parse_element(parent=SUBROUTINE_DEC,
-                               expected_constants=Keywords.VOID)
-
+        if self.is_next(const=Keywords.VOID):
+            self.consume(parent=SUB_DEC, const=Keywords.VOID)
         else:
-            self.parse_type(parent=SUBROUTINE_DEC)
+            self.compile_type(parent=SUB_DEC)
 
-        self.parse_element(parent=SUBROUTINE_DEC,
-                           expected_token=Tokens.identifier)
+        self.consume(parent=SUB_DEC, token=Tokens.identifier)
 
-        self.parse_element(parent=SUBROUTINE_DEC,
-                           expected_constants=Symbols.OPEN_BRACKET)
+        self.consume(parent=SUB_DEC, const=Symbols.OPEN_REG)
 
-        self.compile_parameter_list(parent=SUBROUTINE_DEC)
+        self.compile_parameter_list(parent=SUB_DEC)
 
-        self.parse_element(parent=SUBROUTINE_DEC,
-                           expected_constants=Symbols.CLOSE_BRACKET)
+        self.consume(parent=SUB_DEC, const=Symbols.CLOSE_REG)
 
-        self.compile_subroutine_body(parent=SUBROUTINE_DEC)
+        self.compile_subroutine_body(parent=SUB_DEC)
 
     def compile_parameter_list(self, parent: Node):
-        PARAMETER_LIST = self._xml_add_element(parent=parent,
-                                               tag="parameterList")
+        PARAM_LIST = self._xml_add_element(parent=parent,
+                                           tag="parameterList")
 
-        if self._is_token(which='next',
-                          expected_token=[Tokens.keyword, Tokens.identifier],
-                          expected_constants=[Keywords.INT,
-                                              Keywords.CHAR,
-                                              Keywords.BOOLEAN]):
+        const = [Keywords.INT, Keywords.CHAR, Keywords.BOOL]
+        tok = Tokens.identifier
 
-            self.parse_type(parent=PARAMETER_LIST)
+        if (self.is_next(const=const) or self.is_next(token=tok)):
 
-            self.parse_element(parent=PARAMETER_LIST,
-                               expected_token=Tokens.identifier)
+            self.compile_type(parent=PARAM_LIST)
 
-            while self._is_token(which='next',
-                                 expected_token=Tokens.symbol,
-                                 expected_constants=[Symbols.COMMA]):
+            self.consume(parent=PARAM_LIST, token=Tokens.identifier)
 
-                self.parse_element(parent=PARAMETER_LIST,
-                                   expected_constants=Symbols.COMMA)
+            while self.is_next(const=[Symbols.COMMA]):
 
-                self.parse_type(parent=PARAMETER_LIST)
-
-                self.parse_element(parent=PARAMETER_LIST,
-                                   expected_token=Tokens.identifier)
+                self.consume(parent=PARAM_LIST, const=Symbols.COMMA)
+                self.compile_type(parent=PARAM_LIST)
+                self.consume(parent=PARAM_LIST, token=Tokens.identifier)
 
     def compile_subroutine_body(self, parent: Node):
-        SUBROUTINE_BODY = self._xml_add_element(parent=parent,
-                                                tag="subroutineBody")
+        SUB_BODY = self._xml_add_element(parent=parent, tag="subroutineBody")
 
-        self.parse_element(parent=SUBROUTINE_BODY,
-                           expected_constants=Symbols.OPEN_CURLY_BRACKET)
+        self.consume(parent=SUB_BODY, const=Symbols.OPEN_CURLY)
 
-        if self._is_token(which='next',
-                          expected_constants=Keywords.VAR):
-            self.compile_var_dec(parent=SUBROUTINE_BODY)
+        if self.is_next(const=Keywords.VAR):
+            self.compile_var_dec(parent=SUB_BODY)
 
-        self.compile_statements(SUBROUTINE_BODY)
+        self.compile_statements(SUB_BODY)
 
-        self.parse_element(parent=SUBROUTINE_BODY,
-                           expected_constants=Symbols.CLOSE_CURLY_BRACKET)
+        self.consume(parent=SUB_BODY, const=Symbols.CLOSE_CURLY)
 
     def compile_var_dec(self, parent: Node):
         VAR_DEC = self._xml_add_element(parent=parent,
                                         tag="varDec")
 
-        self.parse_element(parent=VAR_DEC,
-                           expected_constants=Keywords.VAR)
+        self.consume(parent=VAR_DEC, const=Keywords.VAR)
+        self.compile_type(VAR_DEC)
+        self.consume(parent=VAR_DEC, token=Tokens.identifier)
 
-        self.parse_type(VAR_DEC)
+        while self.is_next(const=Symbols.COMMA):
 
-        self.parse_element(parent=VAR_DEC,
-                           expected_token=Tokens.identifier)
+            self.consume(parent=VAR_DEC, const=Symbols.COMMA)
+            self.consume(parent=VAR_DEC, token=Tokens.identifier)
 
-        while self._is_token(which='next',
-                             expected_constants=Symbols.COMMA):
+        self.consume(parent=VAR_DEC, const=Symbols.SEMICOLON)
 
-            self.parse_element(parent=VAR_DEC,
-                               expected_constants=Symbols.COMMA)
-
-            self.parse_element(parent=VAR_DEC,
-                               expected_token=Tokens.identifier)
-
-        self.parse_element(parent=VAR_DEC,
-                           expected_constants=Symbols.SEMICOLON)
-
-        if self._is_token(which='next',
-                          expected_constants=Keywords.VAR):
+        if self.is_next(const=Keywords.VAR):
             self.compile_var_dec(parent=parent)
 
     def compile_statements(self, parent: Node):
         STATEMENTS = self._xml_add_element(parent=parent, tag="statements")
-        while self._is_token(which='next',
-                             expected_constants=[Keywords.LET,
-                                                 Keywords.IF,
-                                                 Keywords.WHILE,
-                                                 Keywords.DO,
-                                                 Keywords.RETURN]):
-            self.parse_statements(parent=STATEMENTS)
+        while self.is_next(
+            const=[Keywords.LET,
+                   Keywords.IF,
+                   Keywords.WHILE,
+                   Keywords.DO,
+                   Keywords.RETURN]):
+            self.compile_statement(parent=STATEMENTS)
 
-    def parse_statements(self, parent: Node):
+    def compile_statement(self, parent: Node):
 
-        if self._is_token(which='next', expected_constants=Keywords.LET):
+        if self.is_next(const=Keywords.LET):
             self.compile_let_statement(parent=parent)
-        if self._is_token(which='next', expected_constants=Keywords.IF):
+        if self.is_next(const=Keywords.IF):
             ...
-        if self._is_token(which='next', expected_constants=Keywords.WHILE):
+        if self.is_next(const=Keywords.WHILE):
             ...
-        if self._is_token(which='next', expected_constants=Keywords.DO):
+        if self.is_next(const=Keywords.DO):
             ...
-        if self._is_token(which='next', expected_constants=Keywords.RETURN):
+        if self.is_next(const=Keywords.RETURN):
             ...
+
+        raise TypeError("Unknown statement!")
 
     def compile_let_statement(self, parent: Node):
-
         LET_STATEMENT = self._xml_add_element(parent=parent,
                                               tag="letStatement")
 
-        self.parse_element(parent=LET_STATEMENT,
-                           expected_constants=Keywords.LET)
+        self.consume(parent=LET_STATEMENT, const=Keywords.LET)
+        self.consume(parent=LET_STATEMENT, token=Tokens.identifier)
+        self.consume(parent=LET_STATEMENT, const=Keywords.LET)
 
-        self.parse_element(parent=LET_STATEMENT,
-                           expected_token=Tokens.identifier)
+    def is_next(self,
+                token: Optional[Tokens] | Optional[List[Tokens]] = None,
+                const: Optional[List[Constant]] = []
+                ) -> bool:
 
-        self.parse_element(parent=LET_STATEMENT,
-                           expected_constants=Keywords.LET)
+        return self._is_token(
+            which='next',
+            expected_token=token,
+            expected_constants=const)
 
     def _is_token(self,
                   which: Optional[str] = 'this',

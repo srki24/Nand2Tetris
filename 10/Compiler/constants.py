@@ -14,7 +14,7 @@ class Keywords(Constant):
     VAR = "var"
     INT = "int"
     CHAR = "char"
-    BOOLEAN = "boolean"
+    BOOL = "boolean"
     VOID = "void"
     TRUE = "true"
     FALSE = "false"
@@ -30,12 +30,12 @@ class Keywords(Constant):
 
 class Symbols(Constant):
 
-    OPEN_CURLY_BRACKET = "{"
-    CLOSE_CURLY_BRACKET = "}"
-    OPEN_BRACKET = "("
-    CLOSE_BRACKET = ")"
-    OPEN_SQUARE_BRACKET = "["
-    CLOSE_SQUARE_BRACKET = "]"
+    OPEN_CURLY = "{"
+    CLOSE_CURLY = "}"
+    OPEN_REG = "("
+    CLOSE_REG = ")"
+    OPEN_SQUARE = "["
+    CLOSE_SQUARE = "]"
     DOT = "."
     COMMA = ","
     SEMICOLON = ";"
