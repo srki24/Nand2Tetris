@@ -39,19 +39,17 @@
           <expression>
             <term>
               <identifier> Keyboard </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> readInt </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <stringConstant> HOW MANY NUMBERS?  </stringConstant>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> readInt </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <stringConstant> HOW MANY NUMBERS?  </stringConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -63,19 +61,17 @@
           <expression>
             <term>
               <identifier> Array </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> new </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> length </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> new </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> length </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -99,11 +95,9 @@
               <identifier> i </identifier>
             </term>
             <symbol> &lt; </symbol>
-            <expression>
-              <term>
-                <identifier> length </identifier>
-              </term>
-            </expression>
+            <term>
+              <identifier> length </identifier>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -122,19 +116,17 @@
               <expression>
                 <term>
                   <identifier> Keyboard </identifier>
-                  <subroutineCall>
-                    <symbol> . </symbol>
-                    <identifier> readInt </identifier>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term>
-                          <stringConstant> ENTER THE NEXT NUMBER:  </stringConstant>
-                        </term>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> . </symbol>
+                  <identifier> readInt </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+                    <expression>
+                      <term>
+                        <stringConstant> ENTER THE NEXT NUMBER:  </stringConstant>
+                      </term>
+                    </expression>
+                  </expressionList>
+                  <symbol> ) </symbol>
                 </term>
               </expression>
               <symbol> ; </symbol>
@@ -148,11 +140,9 @@
                   <identifier> i </identifier>
                 </term>
                 <symbol> + </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>
@@ -189,11 +179,9 @@
               <identifier> i </identifier>
             </term>
             <symbol> &lt; </symbol>
-            <expression>
-              <term>
-                <identifier> length </identifier>
-              </term>
-            </expression>
+            <term>
+              <identifier> length </identifier>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -207,18 +195,16 @@
                   <identifier> sum </identifier>
                 </term>
                 <symbol> + </symbol>
-                <expression>
-                  <term>
-                    <identifier> a </identifier>
-                    <symbol> [ </symbol>
-                    <expression>
-                      <term>
-                        <identifier> i </identifier>
-                      </term>
-                    </expression>
-                    <symbol> ] </symbol>
-                  </term>
-                </expression>
+                <term>
+                  <identifier> a </identifier>
+                  <symbol> [ </symbol>
+                  <expression>
+                    <term>
+                      <identifier> i </identifier>
+                    </term>
+                  </expression>
+                  <symbol> ] </symbol>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>
@@ -231,11 +217,9 @@
                   <identifier> i </identifier>
                 </term>
                 <symbol> + </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 1 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 1 </integerConstant>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>
@@ -245,59 +229,47 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Output </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> printString </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <stringConstant> THE AVERAGE IS:  </stringConstant>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> printString </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <stringConstant> THE AVERAGE IS:  </stringConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Output </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> printInt </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> sum </identifier>
-                </term>
-                <symbol> / </symbol>
-                <expression>
-                  <term>
-                    <identifier> length </identifier>
-                  </term>
-                </expression>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> printInt </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> sum </identifier>
+              </term>
+              <symbol> / </symbol>
+              <term>
+                <identifier> length </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Output </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> println </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> println </identifier>
+          <symbol> ( </symbol>
+          <expressionList/>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>

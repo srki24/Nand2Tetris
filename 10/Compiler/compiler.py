@@ -292,7 +292,7 @@ class JackCompiler:
 
         while self.is_next(const=op_const):
             self.compile_op(parent=EXPRESSION)
-            self.compile_expression(parent=EXPRESSION)
+            self.compile_term(parent=EXPRESSION)
 
     def compile_op(self, parent: Node):
         const = [Symbols.PLUS, Symbols.MINUS, Symbols.MULT, Symbols.DIV,
@@ -337,23 +337,27 @@ class JackCompiler:
         self.consume(parent=parent, const=[Symbols.NOT, Symbols.MINUS])
 
     def compile_sub_call(self, parent: Node):
-        SUB_CALL = self._xml_add_element(parent=parent,
-                                         tag="subroutineCall")
 
         if self.is_next(const=Symbols.DOT):
-            self.consume(parent=SUB_CALL, const=Symbols.DOT)
-            self.consume(parent=SUB_CALL, token=Tokens.identifier)
+            self.consume(parent=parent, const=Symbols.DOT)
+            self.consume(parent=parent, token=Tokens.identifier)
 
         if self.is_next(const=Symbols.OPEN_REG):
 
-            self.consume(parent=SUB_CALL, const=Symbols.OPEN_REG)
-            self.compile_expression_list(parent=SUB_CALL)
-            self.consume(parent=SUB_CALL, const=Symbols.CLOSE_REG)
+            self.consume(parent=parent, const=Symbols.OPEN_REG)
+
+            self.compile_expression_list(parent=parent)
+
+            self.consume(parent=parent, const=Symbols.CLOSE_REG)
 
     def compile_expression_list(self, parent: Node):
         EXPR_LIST = self._xml_add_element(parent=parent,
                                           tag="expressionList")
-
+        
+        # No parameters
+        if self.is_next(const=Symbols.CLOSE_REG):
+            return 
+        
         self.compile_expression(parent=EXPR_LIST)
 
         while self.is_next(const=Symbols.COMMA):
