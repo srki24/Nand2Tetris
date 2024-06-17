@@ -14,6 +14,12 @@ class JackCompiler:
         self.tokenizer = JackTokenizer(file)
         self.doc = Document()
 
+
+    def _xml_write_file(self, node: Node):
+        tree = node.toprettyxml(indent="  ")
+        with open(self.file.replace(".jack", "-test-compiler.xml"), "w") as output:
+            output.write(tree)
+
     def _xml_add_element(self, parent: Node, tag: str, value: Optional[str] = None):
         element = self.doc.createElement(tag)
 
@@ -62,12 +68,15 @@ class JackCompiler:
 
         self.consume(parent=CLASS, const=Symbols.CLOSE_CURLY)
 
+
+        self._xml_write_file(CLASS)
+
     def compile_class_var_dec(self, parent: Node):
 
         CLASS_VAR_DEC = self._xml_add_element(parent=parent, tag="classVarDec")
 
         self.consume(parent=CLASS_VAR_DEC, const=[Keywords.STATIC,
-                                                        Keywords.FIELD])
+                                                  Keywords.FIELD])
 
         self.compile_type(CLASS_VAR_DEC)
 
@@ -100,8 +109,8 @@ class JackCompiler:
         SUB_DEC = self._xml_add_element(parent=parent, tag="subroutineDec")
 
         self.consume(parent=SUB_DEC, const=[Keywords.CONSTRUCTOR,
-                                                  Keywords.FUNCTION,
-                                                  Keywords.METHOD])
+                                            Keywords.FUNCTION,
+                                            Keywords.METHOD])
 
         if self.is_next(const=Keywords.VOID):
             self.consume(parent=SUB_DEC, const=Keywords.VOID)
@@ -181,16 +190,21 @@ class JackCompiler:
 
         if self.is_next(const=Keywords.LET):
             self.compile_let_statement(parent=parent)
-        if self.is_next(const=Keywords.IF):
-            ...
-        if self.is_next(const=Keywords.WHILE):
-            ...
-        if self.is_next(const=Keywords.DO):
-            ...
-        if self.is_next(const=Keywords.RETURN):
-            ...
 
-        raise TypeError("Unknown statement!")
+        elif self.is_next(const=Keywords.IF):
+            self.compile_if_statement(parent=parent)
+
+        elif self.is_next(const=Keywords.WHILE):
+            self.compile_while_statement(parent=parent)
+
+        elif self.is_next(const=Keywords.DO):
+            self.compile_do_statement(parent=parent)
+
+        elif self.is_next(const=Keywords.RETURN):
+            self.compile_return_statement(parent=parent)
+
+        else:
+            raise TypeError("Unknown statement!")
 
     def compile_let_statement(self, parent: Node):
         LET_STATEMENT = self._xml_add_element(parent=parent,
@@ -198,7 +212,157 @@ class JackCompiler:
 
         self.consume(parent=LET_STATEMENT, const=Keywords.LET)
         self.consume(parent=LET_STATEMENT, token=Tokens.identifier)
-        self.consume(parent=LET_STATEMENT, const=Keywords.LET)
+
+        if self.is_next(const=Symbols.OPEN_SQUARE):
+            self.consume(parent=LET_STATEMENT, const=Symbols.OPEN_SQUARE)
+            self.compile_expression(parent=LET_STATEMENT)
+            self.consume(parent=LET_STATEMENT, const=Symbols.CLOSE_SQUARE)
+
+        self.consume(parent=LET_STATEMENT, const=Symbols.EQ)
+
+        self.compile_expression(parent=LET_STATEMENT)
+
+        self.consume(parent=LET_STATEMENT, const=Symbols.SEMICOLON)
+
+    def compile_if_statement(self, parent: Node):
+        IF_STATEMENT = self._xml_add_element(parent=parent,
+                                             tag="ifStatement")
+
+        self.consume(parent=IF_STATEMENT, const=Keywords.IF)
+
+        self.consume(parent=IF_STATEMENT, const=Symbols.OPEN_REG)
+        self.compile_expression(parent=IF_STATEMENT)
+        self.consume(parent=IF_STATEMENT, const=Symbols.CLOSE_REG)
+
+        self.consume(parent=IF_STATEMENT, const=Symbols.OPEN_CURLY)
+        self.compile_statements(parent=IF_STATEMENT)
+        self.consume(parent=IF_STATEMENT, const=Symbols.CLOSE_CURLY)
+
+        if self.is_next(const=Keywords.ELSE):
+            self.consume(parent=IF_STATEMENT, const=Keywords.ELSE)
+            self.consume(parent=IF_STATEMENT, const=Symbols.OPEN_CURLY)
+            self.compile_statements(parent=IF_STATEMENT)
+            self.consume(parent=IF_STATEMENT, const=Symbols.CLOSE_CURLY)
+
+    def compile_while_statement(self, parent: Node):
+        WHILE_STATEMENT = self._xml_add_element(parent=parent,
+                                                tag="whileStatement")
+
+        self.consume(parent=WHILE_STATEMENT, const=Keywords.WHILE)
+
+        self.consume(parent=WHILE_STATEMENT, const=Symbols.OPEN_REG)
+        self.compile_expression(parent=WHILE_STATEMENT)
+        self.consume(parent=WHILE_STATEMENT, const=Symbols.CLOSE_REG)
+
+        self.consume(parent=WHILE_STATEMENT, const=Symbols.OPEN_CURLY)
+        self.compile_statements(parent=WHILE_STATEMENT)
+        self.consume(parent=WHILE_STATEMENT, const=Symbols.CLOSE_CURLY)
+
+    def compile_do_statement(self, parent: Node):
+        DO_STATEMENT = self._xml_add_element(parent=parent,
+                                             tag="doStatement")
+
+        self.consume(parent=DO_STATEMENT, const=Keywords.DO)
+
+        self.consume(parent=DO_STATEMENT, token=Tokens.identifier)
+        self.compile_sub_call(parent=DO_STATEMENT)
+        self.consume(parent=DO_STATEMENT, const=Symbols.SEMICOLON)
+
+    def compile_return_statement(self, parent: Node):
+        RETURN_STATEMENT = self._xml_add_element(parent=parent,
+                                                 tag="returnStatement")
+
+        self.consume(parent=RETURN_STATEMENT, const=Keywords.RETURN)
+
+        if not self.is_next(const=Symbols.SEMICOLON):
+            self.compile_expression(parent=RETURN_STATEMENT)
+
+        self.consume(parent=RETURN_STATEMENT, const=Symbols.SEMICOLON)
+
+    def compile_expression(self, parent=Node):
+        EXPRESSION = self._xml_add_element(parent=parent,
+                                           tag="expression")
+
+        self.compile_term(EXPRESSION)
+
+        op_const = [Symbols.PLUS, Symbols.MINUS, Symbols.MULT, Symbols.DIV,
+                    Symbols.AND, Symbols.OR, Symbols.GT, Symbols.LT, Symbols.EQ]
+
+        while self.is_next(const=op_const):
+            self.compile_op(parent=EXPRESSION)
+            self.compile_expression(parent=EXPRESSION)
+
+    def compile_op(self, parent: Node):
+        OP = self._xml_add_element(parent=parent,
+                                   tag="op")
+
+        const = [Symbols.PLUS, Symbols.MINUS, Symbols.MULT, Symbols.DIV,
+                 Symbols.AND, Symbols.OR, Symbols.GT, Symbols.LT, Symbols.EQ]
+
+        self.consume(parent=OP, const=const)
+
+    def compile_term(self, parent=Node):
+        TERM = self._xml_add_element(parent=parent,
+                                     tag="term")
+
+        token = [Tokens.integerConstant, Tokens.stringConstant]
+        if self.is_next(token=token):
+            self.consume(parent=TERM, token=token)
+
+        keyword_const = [Keywords.TRUE, Keywords.FALSE,
+                         Keywords.NULL, Keywords.THIS]
+        if self.is_next(const=keyword_const):
+            self.consume(parent=TERM, const=keyword_const)
+
+        if self.is_next(const=Symbols.OPEN_REG):
+            self.consume(parent=TERM, const=Symbols.OPEN_REG)
+            self.compile_expression(parent=TERM)
+            self.consume(parent=TERM, const=Symbols.CLOSE_REG)
+
+        if self.is_next(const=[Symbols.NOT, Symbols.MINUS]):
+            self.compile_unary_op(parent=TERM)
+            self.compile_term(parent=parent)
+
+        if self.is_next(token=Tokens.identifier):
+            self.consume(parent=TERM, token=Tokens.identifier)
+
+            if self.is_next(const=Symbols.OPEN_SQUARE):
+                self.consume(parent=TERM, const=Symbols.OPEN_SQUARE)
+                self.compile_expression(parent=TERM)
+                self.consume(parent=TERM, const=Symbols.CLOSE_SQUARE)
+
+            if self.is_next(const=[Symbols.OPEN_REG, Symbols.DOT]):
+                self.compile_sub_call(parent=TERM)
+
+    def compile_unary_op(self, parent: Node):
+        UNARY_OP = self._xml_add_element(parent=parent,
+                                         tag="unaryOp")
+
+        self.consume(parent=UNARY_OP, const=[Symbols.NOT, Symbols.MINUS])
+
+    def compile_sub_call(self, parent: Node):
+        SUB_CALL = self._xml_add_element(parent=parent,
+                                         tag="subroutineCall")
+
+        if self.is_next(const=Symbols.DOT):
+            self.consume(parent=SUB_CALL, const=Symbols.DOT)
+            self.consume(parent=SUB_CALL, token=Tokens.identifier)
+
+        if self.is_next(const=Symbols.OPEN_REG):
+
+            self.consume(parent=SUB_CALL, const=Symbols.OPEN_REG)
+            self.compile_expression_list(parent=SUB_CALL)
+            self.consume(parent=SUB_CALL, const=Symbols.CLOSE_REG)
+
+    def compile_expression_list(self, parent: Node):
+        EXPR_LIST = self._xml_add_element(parent=parent,
+                                          tag="expressionList")
+
+        self.compile_expression(parent=EXPR_LIST)
+
+        while self.is_next(const=Symbols.COMMA):
+            self.consume(parent=EXPR_LIST, const=Symbols.COMMA)
+            self.consume_expression(parent=EXPR_LIST)
 
     def is_next(self,
                 token: Optional[Tokens] | Optional[List[Tokens]] = None,
