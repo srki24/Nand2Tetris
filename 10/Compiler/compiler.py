@@ -86,6 +86,8 @@ class JackCompiler:
             self.consume(parent=CLASS_VAR_DEC, const=Symbols.COMMA)
             self.consume(parent=CLASS_VAR_DEC, token=Tokens.identifier)
 
+        self.consume(parent=CLASS_VAR_DEC, const=Symbols.SEMICOLON)
+
     def compile_type(self, parent: Node):
 
         const = [Keywords.INT, Keywords.CHAR, Keywords.BOOL]
@@ -293,13 +295,10 @@ class JackCompiler:
             self.compile_expression(parent=EXPRESSION)
 
     def compile_op(self, parent: Node):
-        OP = self._xml_add_element(parent=parent,
-                                   tag="op")
-
         const = [Symbols.PLUS, Symbols.MINUS, Symbols.MULT, Symbols.DIV,
                  Symbols.AND, Symbols.OR, Symbols.GT, Symbols.LT, Symbols.EQ]
 
-        self.consume(parent=OP, const=const)
+        self.consume(parent=parent, const=const)
 
     def compile_term(self, parent=Node):
         TERM = self._xml_add_element(parent=parent,
@@ -335,10 +334,7 @@ class JackCompiler:
                 self.compile_sub_call(parent=TERM)
 
     def compile_unary_op(self, parent: Node):
-        UNARY_OP = self._xml_add_element(parent=parent,
-                                         tag="unaryOp")
-
-        self.consume(parent=UNARY_OP, const=[Symbols.NOT, Symbols.MINUS])
+        self.consume(parent=parent, const=[Symbols.NOT, Symbols.MINUS])
 
     def compile_sub_call(self, parent: Node):
         SUB_CALL = self._xml_add_element(parent=parent,
@@ -362,7 +358,7 @@ class JackCompiler:
 
         while self.is_next(const=Symbols.COMMA):
             self.consume(parent=EXPR_LIST, const=Symbols.COMMA)
-            self.consume_expression(parent=EXPR_LIST)
+            self.compile_expression(parent=EXPR_LIST)
 
     def is_next(self,
                 token: Optional[Tokens] | Optional[List[Tokens]] = None,

@@ -98,9 +98,7 @@
             <term>
               <identifier> i </identifier>
             </term>
-            <op>
-              <symbol> &lt; </symbol>
-            </op>
+            <symbol> &lt; </symbol>
             <expression>
               <term>
                 <identifier> length </identifier>
@@ -149,9 +147,7 @@
                 <term>
                   <identifier> i </identifier>
                 </term>
-                <op>
-                  <symbol> + </symbol>
-                </op>
+                <symbol> + </symbol>
                 <expression>
                   <term>
                     <integerConstant> 1 </integerConstant>
@@ -192,9 +188,7 @@
             <term>
               <identifier> i </identifier>
             </term>
-            <op>
-              <symbol> &lt; </symbol>
-            </op>
+            <symbol> &lt; </symbol>
             <expression>
               <term>
                 <identifier> length </identifier>
@@ -212,9 +206,7 @@
                 <term>
                   <identifier> sum </identifier>
                 </term>
-                <op>
-                  <symbol> + </symbol>
-                </op>
+                <symbol> + </symbol>
                 <expression>
                   <term>
                     <identifier> a </identifier>
@@ -238,9 +230,7 @@
                 <term>
                   <identifier> i </identifier>
                 </term>
-                <op>
-                  <symbol> + </symbol>
-                </op>
+                <symbol> + </symbol>
                 <expression>
                   <term>
                     <integerConstant> 1 </integerConstant>
@@ -282,9 +272,7 @@
                 <term>
                   <identifier> sum </identifier>
                 </term>
-                <op>
-                  <symbol> / </symbol>
-                </op>
+                <symbol> / </symbol>
                 <expression>
                   <term>
                     <identifier> length </identifier>
