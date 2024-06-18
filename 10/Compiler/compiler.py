@@ -14,7 +14,6 @@ class JackCompiler:
         self.tokenizer = JackTokenizer(file)
         self.doc = Document()
 
-
     def _xml_write_file(self, node: Node):
         tree = node.toprettyxml(indent="  ")
         with open(self.file.replace(".jack", "-test-compiler.xml"), "w") as output:
@@ -67,7 +66,6 @@ class JackCompiler:
             self.compile_subroutine_dec(parent=CLASS)
 
         self.consume(parent=CLASS, const=Symbols.CLOSE_CURLY)
-
 
         self._xml_write_file(CLASS)
 
@@ -147,6 +145,9 @@ class JackCompiler:
                 self.consume(parent=PARAM_LIST, const=Symbols.COMMA)
                 self.compile_type(parent=PARAM_LIST)
                 self.consume(parent=PARAM_LIST, token=Tokens.identifier)
+        else:
+            empty_node = self.doc.createTextNode("\n")
+            PARAM_LIST.appendChild(empty_node)
 
     def compile_subroutine_body(self, parent: Node):
         SUB_BODY = self._xml_add_element(parent=parent, tag="subroutineBody")
@@ -180,12 +181,16 @@ class JackCompiler:
 
     def compile_statements(self, parent: Node):
         STATEMENTS = self._xml_add_element(parent=parent, tag="statements")
-        while self.is_next(
-            const=[Keywords.LET,
-                   Keywords.IF,
-                   Keywords.WHILE,
-                   Keywords.DO,
-                   Keywords.RETURN]):
+
+        const = [
+            Keywords.LET, Keywords.IF, Keywords.WHILE, Keywords.DO, Keywords.RETURN
+        ]
+
+        if not self.is_next(const=const):
+            empty_node = self.doc.createTextNode("\n")
+            STATEMENTS.appendChild(empty_node)
+
+        while self.is_next(const=const):
             self.compile_statement(parent=STATEMENTS)
 
     def compile_statement(self, parent: Node):
@@ -305,24 +310,25 @@ class JackCompiler:
                                      tag="term")
 
         token = [Tokens.integerConstant, Tokens.stringConstant]
-        if self.is_next(token=token):
-            self.consume(parent=TERM, token=token)
 
         keyword_const = [Keywords.TRUE, Keywords.FALSE,
                          Keywords.NULL, Keywords.THIS]
-        if self.is_next(const=keyword_const):
+        if self.is_next(token=token):
+            self.consume(parent=TERM, token=token)
+
+        elif self.is_next(const=keyword_const):
             self.consume(parent=TERM, const=keyword_const)
 
-        if self.is_next(const=Symbols.OPEN_REG):
+        elif self.is_next(const=Symbols.OPEN_REG):
             self.consume(parent=TERM, const=Symbols.OPEN_REG)
             self.compile_expression(parent=TERM)
             self.consume(parent=TERM, const=Symbols.CLOSE_REG)
 
-        if self.is_next(const=[Symbols.NOT, Symbols.MINUS]):
+        elif self.is_next(const=[Symbols.NOT, Symbols.MINUS]):
             self.compile_unary_op(parent=TERM)
-            self.compile_term(parent=parent)
+            self.compile_term(parent=TERM)
 
-        if self.is_next(token=Tokens.identifier):
+        elif self.is_next(token=Tokens.identifier):
             self.consume(parent=TERM, token=Tokens.identifier)
 
             if self.is_next(const=Symbols.OPEN_SQUARE):
@@ -332,6 +338,9 @@ class JackCompiler:
 
             if self.is_next(const=[Symbols.OPEN_REG, Symbols.DOT]):
                 self.compile_sub_call(parent=TERM)
+
+        # else:
+        #     raise ValueError(f"Failed to compile term {self.tokenizer.value}")
 
     def compile_unary_op(self, parent: Node):
         self.consume(parent=parent, const=[Symbols.NOT, Symbols.MINUS])
@@ -353,11 +362,13 @@ class JackCompiler:
     def compile_expression_list(self, parent: Node):
         EXPR_LIST = self._xml_add_element(parent=parent,
                                           tag="expressionList")
-        
+
         # No parameters
         if self.is_next(const=Symbols.CLOSE_REG):
-            return 
-        
+            empty_node = self.doc.createTextNode("\n")
+            EXPR_LIST.appendChild(empty_node)
+            return
+
         self.compile_expression(parent=EXPR_LIST)
 
         while self.is_next(const=Symbols.COMMA):

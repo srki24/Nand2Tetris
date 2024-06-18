@@ -19,7 +19,8 @@
     <identifier> SquareGame </identifier>
     <identifier> new </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -31,31 +32,29 @@
           <expression>
             <term>
               <identifier> Square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> new </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <integerConstant> 0 </integerConstant>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <integerConstant> 0 </integerConstant>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <integerConstant> 30 </integerConstant>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> new </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <integerConstant> 0 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <integerConstant> 0 </integerConstant>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <integerConstant> 30 </integerConstant>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -89,7 +88,8 @@
     <keyword> void </keyword>
     <identifier> dispose </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -97,35 +97,28 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> square </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> dispose </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> dispose </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> deAlloc </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <keyword> this </keyword>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> deAlloc </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> this </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -141,7 +134,8 @@
     <keyword> void </keyword>
     <identifier> moveSquare </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -154,11 +148,9 @@
               <identifier> direction </identifier>
             </term>
             <symbol> = </symbol>
-            <expression>
-              <term>
-                <integerConstant> 1 </integerConstant>
-              </term>
-            </expression>
+            <term>
+              <integerConstant> 1 </integerConstant>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -166,17 +158,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveUp </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveUp </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -190,11 +177,9 @@
               <identifier> direction </identifier>
             </term>
             <symbol> = </symbol>
-            <expression>
-              <term>
-                <integerConstant> 2 </integerConstant>
-              </term>
-            </expression>
+            <term>
+              <integerConstant> 2 </integerConstant>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -202,17 +187,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveDown </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveDown </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -226,11 +206,9 @@
               <identifier> direction </identifier>
             </term>
             <symbol> = </symbol>
-            <expression>
-              <term>
-                <integerConstant> 3 </integerConstant>
-              </term>
-            </expression>
+            <term>
+              <integerConstant> 3 </integerConstant>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -238,17 +216,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveLeft </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveLeft </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -262,11 +235,9 @@
               <identifier> direction </identifier>
             </term>
             <symbol> = </symbol>
-            <expression>
-              <term>
-                <integerConstant> 4 </integerConstant>
-              </term>
-            </expression>
+            <term>
+              <integerConstant> 4 </integerConstant>
+            </term>
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
@@ -274,17 +245,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveRight </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveRight </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -293,19 +259,17 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Sys </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> wait </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <integerConstant> 5 </integerConstant>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> wait </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <integerConstant> 5 </integerConstant>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -321,7 +285,8 @@
     <keyword> void </keyword>
     <identifier> run </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -355,9 +320,9 @@
           <expression>
             <term>
               <symbol> ~ </symbol>
-            </term>
-            <term>
-              <identifier> exit </identifier>
+              <term>
+                <identifier> exit </identifier>
+              </term>
             </term>
           </expression>
           <symbol> ) </symbol>
@@ -371,11 +336,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 0 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 0 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -387,17 +350,12 @@
                   <expression>
                     <term>
                       <identifier> Keyboard </identifier>
-                      <subroutineCall>
-                        <symbol> . </symbol>
-                        <identifier> keyPressed </identifier>
-                        <symbol> ( </symbol>
-                        <expressionList>
-                          <expression>
-                            <term/>
-                          </expression>
-                        </expressionList>
-                        <symbol> ) </symbol>
-                      </subroutineCall>
+                      <symbol> . </symbol>
+                      <identifier> keyPressed </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+</expressionList>
+                      <symbol> ) </symbol>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -405,15 +363,10 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
-                  <subroutineCall>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -427,11 +380,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 81 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 81 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -458,11 +409,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 90 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 90 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -470,17 +419,12 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
-                  <subroutineCall>
-                    <symbol> . </symbol>
-                    <identifier> decSize </identifier>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> . </symbol>
+                  <identifier> decSize </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -494,11 +438,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 88 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 88 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -506,17 +448,12 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
-                  <subroutineCall>
-                    <symbol> . </symbol>
-                    <identifier> incSize </identifier>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> . </symbol>
+                  <identifier> incSize </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -530,11 +467,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 131 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 131 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -561,11 +496,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 133 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 133 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -592,11 +525,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 130 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 130 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -623,11 +554,9 @@
                   <identifier> key </identifier>
                 </term>
                 <symbol> = </symbol>
-                <expression>
-                  <term>
-                    <integerConstant> 132 </integerConstant>
-                  </term>
-                </expression>
+                <term>
+                  <integerConstant> 132 </integerConstant>
+                </term>
               </expression>
               <symbol> ) </symbol>
               <symbol> { </symbol>
@@ -652,21 +581,19 @@
               <expression>
                 <term>
                   <symbol> ~ </symbol>
-                </term>
-                <term>
-                  <symbol> ( </symbol>
-                  <expression>
-                    <term>
-                      <identifier> key </identifier>
-                    </term>
-                    <symbol> = </symbol>
+                  <term>
+                    <symbol> ( </symbol>
                     <expression>
+                      <term>
+                        <identifier> key </identifier>
+                      </term>
+                      <symbol> = </symbol>
                       <term>
                         <integerConstant> 0 </integerConstant>
                       </term>
                     </expression>
-                  </expression>
-                  <symbol> ) </symbol>
+                    <symbol> ) </symbol>
+                  </term>
                 </term>
               </expression>
               <symbol> ) </symbol>
@@ -679,17 +606,12 @@
                   <expression>
                     <term>
                       <identifier> Keyboard </identifier>
-                      <subroutineCall>
-                        <symbol> . </symbol>
-                        <identifier> keyPressed </identifier>
-                        <symbol> ( </symbol>
-                        <expressionList>
-                          <expression>
-                            <term/>
-                          </expression>
-                        </expressionList>
-                        <symbol> ) </symbol>
-                      </subroutineCall>
+                      <symbol> . </symbol>
+                      <identifier> keyPressed </identifier>
+                      <symbol> ( </symbol>
+                      <expressionList>
+</expressionList>
+                      <symbol> ) </symbol>
                     </term>
                   </expression>
                   <symbol> ; </symbol>
@@ -697,15 +619,10 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
-                  <subroutineCall>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>

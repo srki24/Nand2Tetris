@@ -13,7 +13,8 @@
     <keyword> void </keyword>
     <identifier> main </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -31,17 +32,12 @@
           <expression>
             <term>
               <identifier> SquareGame </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> new </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> new </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
             </term>
           </expression>
           <symbol> ; </symbol>
@@ -49,33 +45,23 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> run </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> run </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> dispose </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> dispose </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -91,7 +77,8 @@
     <keyword> void </keyword>
     <identifier> more </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -188,20 +175,18 @@
                   <identifier> i </identifier>
                 </term>
                 <symbol> * </symbol>
-                <expression>
-                  <term>
-                    <symbol> ( </symbol>
-                    <expression>
-                      <term>
-                        <symbol> - </symbol>
-                      </term>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <symbol> - </symbol>
                       <term>
                         <identifier> j </identifier>
                       </term>
-                    </expression>
-                    <symbol> ) </symbol>
-                  </term>
-                </expression>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>
@@ -214,20 +199,18 @@
                   <identifier> j </identifier>
                 </term>
                 <symbol> / </symbol>
-                <expression>
-                  <term>
-                    <symbol> ( </symbol>
-                    <expression>
-                      <term>
-                        <symbol> - </symbol>
-                      </term>
+                <term>
+                  <symbol> ( </symbol>
+                  <expression>
+                    <term>
+                      <symbol> - </symbol>
                       <term>
                         <integerConstant> 2 </integerConstant>
                       </term>
-                    </expression>
-                    <symbol> ) </symbol>
-                  </term>
-                </expression>
+                    </term>
+                  </expression>
+                  <symbol> ) </symbol>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>
@@ -240,11 +223,9 @@
                   <identifier> i </identifier>
                 </term>
                 <symbol> | </symbol>
-                <expression>
-                  <term>
-                    <identifier> j </identifier>
-                  </term>
-                </expression>
+                <term>
+                  <identifier> j </identifier>
+                </term>
               </expression>
               <symbol> ; </symbol>
             </letStatement>

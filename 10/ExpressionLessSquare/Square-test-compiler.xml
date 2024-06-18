@@ -71,15 +71,10 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> draw </identifier>
-          <subroutineCall>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -100,7 +95,8 @@
     <keyword> void </keyword>
     <identifier> dispose </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -108,19 +104,17 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> deAlloc </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <keyword> this </keyword>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> deAlloc </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <keyword> this </keyword>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -136,7 +130,8 @@
     <keyword> void </keyword>
     <identifier> draw </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -144,55 +139,51 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> setColor </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> setColor </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> drawRectangle </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> y </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> y </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> drawRectangle </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -208,7 +199,8 @@
     <keyword> void </keyword>
     <identifier> erase </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -216,55 +208,51 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> setColor </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> setColor </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Screen </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> drawRectangle </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> y </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> x </identifier>
-                </term>
-              </expression>
-              <symbol> , </symbol>
-              <expression>
-                <term>
-                  <identifier> y </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> drawRectangle </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> x </identifier>
+              </term>
+            </expression>
+            <symbol> , </symbol>
+            <expression>
+              <term>
+                <identifier> y </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -280,7 +268,8 @@
     <keyword> void </keyword>
     <identifier> incSize </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -299,15 +288,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
-              <subroutineCall>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -324,15 +308,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
-              <subroutineCall>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -351,7 +330,8 @@
     <keyword> void </keyword>
     <identifier> decSize </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -370,15 +350,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> erase </identifier>
-              <subroutineCall>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -395,15 +370,10 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> draw </identifier>
-              <subroutineCall>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -422,7 +392,8 @@
     <keyword> void </keyword>
     <identifier> moveUp </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -441,55 +412,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -506,55 +473,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -573,7 +536,8 @@
     <keyword> void </keyword>
     <identifier> moveDown </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -592,55 +556,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -657,55 +617,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -724,7 +680,8 @@
     <keyword> void </keyword>
     <identifier> moveLeft </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -743,55 +700,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -808,55 +761,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -875,7 +824,8 @@
     <keyword> void </keyword>
     <identifier> moveRight </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -894,55 +844,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <letStatement>
@@ -959,55 +905,51 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> setColor </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> setColor </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
             <doStatement>
               <keyword> do </keyword>
               <identifier> Screen </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> drawRectangle </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> x </identifier>
-                    </term>
-                  </expression>
-                  <symbol> , </symbol>
-                  <expression>
-                    <term>
-                      <identifier> y </identifier>
-                    </term>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> drawRectangle </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> x </identifier>
+                  </term>
+                </expression>
+                <symbol> , </symbol>
+                <expression>
+                  <term>
+                    <identifier> y </identifier>
+                  </term>
+                </expression>
+              </expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>

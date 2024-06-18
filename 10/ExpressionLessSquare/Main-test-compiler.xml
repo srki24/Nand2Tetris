@@ -13,7 +13,8 @@
     <keyword> void </keyword>
     <identifier> main </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -38,33 +39,23 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> run </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> run </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> game </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> dispose </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> dispose </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -80,7 +71,8 @@
     <keyword> void </keyword>
     <identifier> more </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -101,11 +93,13 @@
           </expression>
           <symbol> ) </symbol>
           <symbol> { </symbol>
-          <statements/>
+          <statements>
+</statements>
           <symbol> } </symbol>
           <keyword> else </keyword>
           <symbol> { </symbol>
-          <statements/>
+          <statements>
+</statements>
           <symbol> } </symbol>
         </ifStatement>
         <returnStatement>

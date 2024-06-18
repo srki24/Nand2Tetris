@@ -19,7 +19,8 @@
     <identifier> SquareGame </identifier>
     <identifier> new </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -64,7 +65,8 @@
     <keyword> void </keyword>
     <identifier> dispose </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -72,35 +74,28 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> square </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> dispose </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term/>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> dispose </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+</expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <doStatement>
           <keyword> do </keyword>
           <identifier> Memory </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> deAlloc </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> square </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> deAlloc </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> square </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -116,7 +111,8 @@
     <keyword> void </keyword>
     <identifier> moveSquare </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -135,17 +131,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveUp </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveUp </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -165,17 +156,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveDown </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveDown </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -195,17 +181,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveLeft </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveLeft </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -225,17 +206,12 @@
             <doStatement>
               <keyword> do </keyword>
               <identifier> square </identifier>
-              <subroutineCall>
-                <symbol> . </symbol>
-                <identifier> moveRight </identifier>
-                <symbol> ( </symbol>
-                <expressionList>
-                  <expression>
-                    <term/>
-                  </expression>
-                </expressionList>
-                <symbol> ) </symbol>
-              </subroutineCall>
+              <symbol> . </symbol>
+              <identifier> moveRight </identifier>
+              <symbol> ( </symbol>
+              <expressionList>
+</expressionList>
+              <symbol> ) </symbol>
               <symbol> ; </symbol>
             </doStatement>
           </statements>
@@ -244,19 +220,17 @@
         <doStatement>
           <keyword> do </keyword>
           <identifier> Sys </identifier>
-          <subroutineCall>
-            <symbol> . </symbol>
-            <identifier> wait </identifier>
-            <symbol> ( </symbol>
-            <expressionList>
-              <expression>
-                <term>
-                  <identifier> direction </identifier>
-                </term>
-              </expression>
-            </expressionList>
-            <symbol> ) </symbol>
-          </subroutineCall>
+          <symbol> . </symbol>
+          <identifier> wait </identifier>
+          <symbol> ( </symbol>
+          <expressionList>
+            <expression>
+              <term>
+                <identifier> direction </identifier>
+              </term>
+            </expression>
+          </expressionList>
+          <symbol> ) </symbol>
           <symbol> ; </symbol>
         </doStatement>
         <returnStatement>
@@ -272,7 +246,8 @@
     <keyword> void </keyword>
     <identifier> run </identifier>
     <symbol> ( </symbol>
-    <parameterList/>
+    <parameterList>
+</parameterList>
     <symbol> ) </symbol>
     <subroutineBody>
       <symbol> { </symbol>
@@ -336,15 +311,10 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
-                  <subroutineCall>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -389,17 +359,12 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
-                  <subroutineCall>
-                    <symbol> . </symbol>
-                    <identifier> decSize </identifier>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> . </symbol>
+                  <identifier> decSize </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -419,17 +384,12 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> square </identifier>
-                  <subroutineCall>
-                    <symbol> . </symbol>
-                    <identifier> incSize </identifier>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> . </symbol>
+                  <identifier> incSize </identifier>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
@@ -560,15 +520,10 @@
                 <doStatement>
                   <keyword> do </keyword>
                   <identifier> moveSquare </identifier>
-                  <subroutineCall>
-                    <symbol> ( </symbol>
-                    <expressionList>
-                      <expression>
-                        <term/>
-                      </expression>
-                    </expressionList>
-                    <symbol> ) </symbol>
-                  </subroutineCall>
+                  <symbol> ( </symbol>
+                  <expressionList>
+</expressionList>
+                  <symbol> ) </symbol>
                   <symbol> ; </symbol>
                 </doStatement>
               </statements>
