@@ -4,10 +4,11 @@ from xml.dom.minidom import Document, Node
 from constants import Keywords, Symbols, Constant
 from tokens import Tokens
 
+from symbol_table import SymbolTable, SymbolKind
 from tokenizer import JackTokenizer
 
 
-class JackCompiler:
+class JackCompilationEngine:
 
     def __init__(self, file):
         self.file = file
